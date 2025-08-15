@@ -1,0 +1,221 @@
+import React, { useState } from 'react'
+import styles from './ContactMe.module.css'
+
+const ContactMe = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null)
+  const [errors, setErrors] = useState({})
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+    // Clear error when user starts typing
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' })
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required'
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters'
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required'
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: data.message })
+        setFormData({ name: '', email: '', message: '' })
+        setErrors({})
+      } else {
+        setSubmitStatus({ 
+          type: 'error', 
+          message: data.error || 'Failed to send message. Please try again.' 
+        })
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus({ 
+        type: 'error', 
+        message: 'Network error. Please check your connection and try again.' 
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <section className={styles.contact} id="contact">
+      <div className={styles.contactContainer}>
+        <h2>Get In Touch</h2>
+        <p className={styles.subtitle}>Let's create something amazing together</p>
+        
+        <div className={styles.contactContent}>
+          <div className={styles.contactInfo}>
+            <h3>Let's Talk</h3>
+            <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+            
+            <div className={styles.infoCards}>
+              <div className={styles.infoCard}>
+                <div className={styles.icon}>📧</div>
+                <div>
+                  <h4>Email</h4>
+                  <p>varunshrimal27@gmail.com</p>
+                </div>
+              </div>
+              
+              <div className={styles.infoCard}>
+                <div className={styles.icon}>📍</div>
+                <div>
+                  <h4>Location</h4>
+                  <p>Available Worldwide</p>
+                </div>
+              </div>
+              
+              <div className={styles.infoCard}>
+                <div className={styles.icon}>⚡</div>
+                <div>
+                  <h4>Response Time</h4>
+                  <p>Within 24 hours</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form className={styles.contactForm} onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`${styles.formInput} ${errors.name ? styles.errorInput : ''}`}
+              />
+              {errors.name && <span className={styles.errorText}>{errors.name}</span>}
+            </div>
+
+            <div className={styles.formGroup}>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`${styles.formInput} ${errors.email ? styles.errorInput : ''}`}
+              />
+              {errors.email && <span className={styles.errorText}>{errors.email}</span>}
+            </div>
+
+            <div className={styles.formGroup}>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Your Message"
+                value={formData.message}
+                onChange={handleChange}
+                className={`${styles.formTextarea} ${errors.message ? styles.errorInput : ''}`}
+                rows="5"
+              />
+              {errors.message && <span className={styles.errorText}>{errors.message}</span>}
+            </div>
+
+            {submitStatus && (
+              <div className={`${styles.statusMessage} ${submitStatus.type === 'success' ? styles.success : styles.error}`}>
+                {submitStatus.message}
+              </div>
+            )}
+
+            <button 
+              type="submit" 
+              className={styles.submitButton}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+          </form>
+        </div>
+
+        <div className={styles.socialLinks}>
+          <a 
+            href="https://www.linkedin.com/in/varun-shrimal-203705283" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={styles.socialLink}
+            aria-label="LinkedIn"
+          >
+            <span className={styles.socialIcon}>💼</span>
+            LinkedIn
+          </a>
+          <a 
+            href="https://github.com/Varun2327-code" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={styles.socialLink}
+            aria-label="GitHub"
+          >
+            <span className={styles.socialIcon}>🐱</span>
+            GitHub
+          </a>
+          <a 
+            href="https://instagram.com/yourprofile" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={styles.socialLink}
+            aria-label="Instagram"
+          >
+            <span className={styles.socialIcon}>📸</span>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default ContactMe

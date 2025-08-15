@@ -1,0 +1,205 @@
+/* Modern Navigation Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+}
+
+.navLink {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.navLink.active {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.15);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.themeToggle:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.toggleTrack {
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  background: #e0e0e0;
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.themeToggle.dark .toggleTrack {
+  background: #333;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.themeToggle.dark .toggleThumb {
+  transform: translateX(1.5rem);
+}
+
+.toggleText {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobileToggle span {
+  width: 1.5rem;
+  height: 0.125rem;
+  background: #333;
+  margin: 0.125rem 0;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode styles */
+:global(.dark) .navbar {
+  background: rgba(30, 30, 30, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .navbar.scrolled {
+  background: rgba(30, 30, 30, 0.98);
+}
+
+:global(.dark) .logo {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global(.dark) .navLink {
+  color: #e0e0e0;
+}
+
+:global(.dark) .navLink:hover {
+  color: #66a6ff;
+  background: rgba(102, 126, 234, 0.2);
+}
+
+:global(.dark) .navLink.active {
+  color: #66a6ff;
+  background: rgba(102, 126, 234, 0.25);
+}
+
+:global(.dark) .mobileToggle span {
+  background: #e0e0e0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .navList {
+    display: none;
+  }
+  
+  .mobileToggle {
+    display: flex;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem 1rem;
+  }
+  
+  .toggleText {
+    display: none;
+  }
+}

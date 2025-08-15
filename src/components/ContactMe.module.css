@@ -1,0 +1,246 @@
+/* Modern Contact Section Styles */
+.contact {
+  padding: 5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.contactContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.contact h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.contactContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.contactInfo {
+  color: white;
+}
+
+.contactInfo h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.contactInfo p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.infoCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.infoCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.infoCard:hover {
+  transform: translateY(-2px);
+}
+
+.icon {
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.infoCard h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: white;
+}
+
+.infoCard p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.contactForm {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: #1a202c;
+  transition: all 0.3s ease;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: #718096;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.socialIcon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact {
+    padding: 3rem 1rem;
+  }
+  
+  .contact h2 {
+    font-size: 2.5rem;
+  }
+  
+  .contactContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .contactForm {
+    padding: 2rem;
+  }
+  
+  .infoCards {
+    gap: 0.75rem;
+  }
+  
+  .infoCard {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact h2 {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .contactForm {
+    padding: 1.5rem;
+  }
+  
+  .socialLinks {
+    gap: 1rem;
+  }
+  
+  .socialLink {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
