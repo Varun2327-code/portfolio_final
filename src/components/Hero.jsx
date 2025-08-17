@@ -7,7 +7,7 @@ const Hero = () => {
   const [loopNum, setLoopNum] = useState(0)
   const [typingSpeed, setTypingSpeed] = useState(150)
   
-  const roles = ['Cybersecurity Analyst', 'Web Developer', 'Security Researcher', 'Full Stack Developer']
+  const roles = ['Cybersecurity Analyst', 'Web Developer', 'Full Stack Developer']
   const fullText = roles[loopNum % roles.length]
 
   useEffect(() => {

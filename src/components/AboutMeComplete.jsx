@@ -35,8 +35,8 @@ const AboutMeComplete = () => {
     setTimeout(() => {
       setDownloadStatus('completed');
       const link = document.createElement('a');
-      link.href = '/resume.pdf';
-      link.download = 'Varun-Shrimal-Resume.pdf';
+      link.href = '/src/assets/VarunShrimalResume1.pdf';
+      link.download = 'VarunShrimalResume1.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -46,11 +46,11 @@ const AboutMeComplete = () => {
   };
 
   const skills = {
-    'Frontend': ['HTML5', 'CSS3', 'JavaScript', 'React', 'TypeScript', 'Tailwind CSS'],
+    'Frontend': ['HTML5', 'CSS3', 'JavaScript', 'React','Tailwind CSS'],
     'Backend': ['Node.js', 'Express.js', 'PHP', 'Python', 'REST APIs'],
     'Database': ['MySQL', 'MongoDB', 'PostgreSQL', 'Redis'],
     'Security': ['Cybersecurity',],
-    'DevOps': ['Git', 'Docker', 'AWS', 'Linux', 'CI/CD'],
+    'DevOps': ['Git', 'Docker', 'AWS', 'Linux'],
     'Tools': ['VS Code', 'Postman', 'Nodemon']
   };
 

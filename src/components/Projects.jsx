@@ -33,7 +33,7 @@ const projects = [
     image: youtubeCloneImage,
     description: 'Developed a YouTube Clone using React.js and YouTube API, featuring video search, playback, channel view, and responsive UI.',
     github: 'https://github.com/Varun2327-code/Youtubeclone',
-    liveDemo: 'https://youtubeclone-mr8wtkxa1-varuns-projects-599513ab.vercel.app',
+    liveDemo: 'youtubeclone-chi-blond.vercel.app',
     techStack: ['React', 'YouTube API', 'CSS3'],
     category: 'web',
     color: '#45B7D1'
@@ -43,7 +43,7 @@ const projects = [
     image: musicPlayerImage,
     description: 'Created a Music Player Web App with HTML, CSS, and JavaScript, enabling playlist creation, play/pause/seek controls, and animations.',
     github: 'https://github.com/Varun2327-code/music_app-frontend',
-    liveDemo: 'https://mmusic-app-frontend-cms897xjt-varuns-projects-599513ab.vercel.app',
+    liveDemo: 'https://music-app-frontend-eta.vercel.app/',
     techStack: ['HTML', 'CSS', 'JavaScript'],
     category: 'web',
     color: '#96CEB4'
@@ -53,7 +53,7 @@ const projects = [
     image: imageCollectionImage,
     description: 'Designed and developed a personal portfolio website using React.js, showcasing projects, skills, and contact information with a modern UI.',
     github: 'https://github.com/Varun2327-code/ImageMarketClone',
-    liveDemo: 'https://image-market-clone-nehym33vu-varuns-projects-599513ab.vercel.app',
+    liveDemo: 'https://image-market-clone.vercel.app/',
     techStack: ['React', 'CSS3', 'Responsive Design'],
     category: 'web',
     color: '#FECA57'

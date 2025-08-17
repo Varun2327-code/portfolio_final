@@ -152,19 +152,7 @@ const Skills = () => {
         ))}
       </div>
 
-      <div className={styles.skillCards}>
-        {skillCategories.flatMap(category => category.skills).map((skill, index) => (
-          <div 
-            key={index} 
-            className={`${styles.skillCard} ${isVisible ? styles['fade-in'] : ''} ${styles['hover-lift']}`}
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <SkillProgressRing percentage={skill.level} icon={skill.icon} />
-            <div className={styles.skillCardName}>{skill.name}</div>
-            <div className={styles.skillCardLevel}>{skill.level}% Proficiency</div>
-          </div>
-        ))}
-      </div>
+      
     </section>
   )
 }
