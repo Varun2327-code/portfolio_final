@@ -6,6 +6,7 @@ import youtubeCloneImage from '../assets/youtube-clone.png'
 import musicPlayerImage from '../assets/music-player.png'
 import imageCollectionImage from '../assets/image-collection.png'
 import medicalDashboardImage from '../assets/medical-dashboard.png'
+import smartSocietyImage from '../assets/smartsociety.png'
 
 const projects = [
   {
@@ -17,6 +18,16 @@ const projects = [
     techStack: ['Android', 'Firebase', 'Java'],
     category: 'mobile',
     color: '#FF6B6B'
+  },
+  {
+    title: 'Smart Society Management',
+    image: smartSocietyImage,
+    description: 'A comprehensive smart society management solution built with React and Node.js, featuring real-time visitor tracking, facility booking, member management, and communication tools. Currently operational and managing multiple residential societies with Firebase backend.',
+    github: 'https://github.com/Varun2327-code/smart-society-management',
+    liveDemo: 'https://smart-society-management.web.app',
+    techStack: ['React', 'Node.js', 'Firebase', 'Express', 'Material-UI'],
+    category: 'web',
+    color: '#FF8C42'
   },
   {
     title: 'Courier Management System',
@@ -74,6 +85,8 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [hoveredCard, setHoveredCard] = useState(null)
+  const [showAll, setShowAll] = useState(false)
+  const [isExpanding, setIsExpanding] = useState(false)
 
   const filteredProjects = projects.filter(project => {
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory
@@ -83,12 +96,28 @@ const Projects = () => {
     return matchesCategory && matchesSearch
   })
 
+  const displayProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6)
+  const hasMoreProjects = filteredProjects.length > 6
+  const hiddenCount = filteredProjects.length - 6
+
   const categories = [
     { id: 'all', name: 'All Projects', icon: '🚀' },
     { id: 'web', name: 'Web Apps', icon: '💻' },
     { id: 'mobile', name: 'Mobile Apps', icon: '📱' },
     { id: 'dashboard', name: 'Dashboards', icon: '📊' }
   ]
+
+  const handleShowMore = () => {
+    setIsExpanding(true)
+    setShowAll(true)
+    setTimeout(() => setIsExpanding(false), 600)
+  }
+
+  const handleShowLess = () => {
+    setShowAll(false)
+    // Scroll to top of projects section
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <section className={styles.projects} id="projects">
@@ -126,11 +155,11 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className={styles.projectsGrid}>
-          {filteredProjects.map((project, index) => (
+        <div className={`${styles.projectsGrid} ${isExpanding ? styles.expanding : ''}`}>
+          {displayProjects.map((project, index) => (
             <div 
               key={index} 
-              className={styles.projectCard}
+              className={`${styles.projectCard} ${showAll && index >= 6 ? styles.fadeIn : ''}`}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{ '--accent-color': project.color }}
@@ -179,6 +208,31 @@ const Projects = () => {
             </div>
           ))}
         </div>
+        
+        {hasMoreProjects && !showAll && (
+          <div className={styles.showMoreContainer}>
+            <button 
+              onClick={handleShowMore}
+              className={styles.showMoreBtn}
+            >
+              <span>Show More</span>
+              <span className={styles.showMoreIcon}>↓</span>
+              <span className={styles.showMoreCount}>+{hiddenCount} more</span>
+            </button>
+          </div>
+        )}
+
+        {showAll && filteredProjects.length > 6 && (
+          <div className={styles.showLessContainer}>
+            <button 
+              onClick={handleShowLess}
+              className={styles.showLessBtn}
+            >
+              <span>Show Less</span>
+              <span className={styles.showLessIcon}>↑</span>
+            </button>
+          </div>
+        )}
         
         {filteredProjects.length === 0 && (
           <div className={styles.emptyState}>

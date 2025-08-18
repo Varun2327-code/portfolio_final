@@ -323,6 +323,72 @@
   transform: translateY(-2px);
 }
 
+/* Show More/Less Buttons */
+.showMoreContainer,
+.showLessContainer {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.showMoreBtn,
+.showLessBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.showMoreBtn {
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  color: white;
+}
+
+.showMoreBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+}
+
+.showLessBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.showLessBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.showMoreIcon,
+.showLessIcon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.showMoreBtn:hover .showMoreIcon {
+  transform: translateY(2px);
+}
+
+.showLessBtn:hover .showLessIcon {
+  transform: translateY(-2px);
+}
+
+.showMoreCount {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  margin-left: 8px;
+}
+
 /* Empty State */
 .emptyState {
   text-align: center;
