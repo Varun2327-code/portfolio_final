@@ -1,91 +1,78 @@
-import React, { useState } from 'react'
-import styles from './ContactMe.module.css'
+import React, { useState } from 'react';
+import styles from './ContactMe.module.css';
 
 const ContactMe = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
-  })
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState(null)
-  const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     // Clear error when user starts typing
     if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' })
+      setErrors({ ...errors, [e.target.name]: '' });
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
+      newErrors.name = 'Name is required';
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters'
+      newErrors.name = 'Name must be at least 2 characters';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required'
+      newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters'
+      newErrors.message = 'Message must be at least 10 characters';
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     
     if (!validateForm()) {
-      return
+      return;
     }
 
-    setIsSubmitting(true)
-    setSubmitStatus(null)
+    const response = await fetch('/api/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }),
+    });
 
-    try {
-      const response = await fetch('http://localhost:5000/api/contact/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
+    const data = await response.json();
 
-      const data = await response.json()
-
-      if (response.ok) {
-        setSubmitStatus({ type: 'success', message: data.message })
-        setFormData({ name: '', email: '', message: '' })
-        setErrors({})
-      } else {
-        setSubmitStatus({ 
-          type: 'error', 
-          message: data.error || 'Failed to send message. Please try again.' 
-        })
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      setSubmitStatus({ 
-        type: 'error', 
-        message: 'Network error. Please check your connection and try again.' 
-      })
-    } finally {
-      setIsSubmitting(false)
+    if (data.success) {
+      alert(data.message);
+      setFormData({ name: '', email: '', message: '' }); // Clear form after submission
+    } else {
+      alert(data.error);
     }
-  }
+  };
 
   return (
     <section className={styles.contact} id="contact">
@@ -215,7 +202,7 @@ const ContactMe = () => {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default ContactMe
+export default ContactMe;
