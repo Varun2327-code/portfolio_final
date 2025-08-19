@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './ContactMe.module.css';
 import { API_CONFIG } from '../config/api';
 
-const ContactMe = () => {
+const ContactMeBackend = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,49 +10,13 @@ const ContactMe = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear error when user starts typing
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' });
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
     setIsSubmitting(true);
     
     try {
@@ -61,32 +25,20 @@ const ContactMe = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        }),
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'Message sent successfully! I\'ll get back to you soon.'
-        });
+      if (response.ok) {
+        alert(data.message || 'Message sent successfully! I\'ll get back to you soon.');
         setFormData({ name: '', email: '', message: '' });
       } else {
-        setSubmitStatus({
-          type: 'error',
-          message: data.error || 'Failed to send message. Please try again.'
-        });
+        alert(data.error || 'Failed to send message. Please try again.');
       }
     } catch (error) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Network error. Please check your connection and try again.'
-      });
+      console.error('Error submitting form:', error);
+      alert('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -139,9 +91,9 @@ const ContactMe = () => {
                 placeholder="Your Name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`${styles.formInput} ${errors.name ? styles.errorInput : ''}`}
+                required
+                className={styles.formInput}
               />
-              {errors.name && <span className={styles.errorText}>{errors.name}</span>}
             </div>
 
             <div className={styles.formGroup}>
@@ -152,9 +104,9 @@ const ContactMe = () => {
                 placeholder="Your Email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`${styles.formInput} ${errors.email ? styles.errorInput : ''}`}
+                required
+                className={styles.formInput}
               />
-              {errors.email && <span className={styles.errorText}>{errors.email}</span>}
             </div>
 
             <div className={styles.formGroup}>
@@ -164,17 +116,11 @@ const ContactMe = () => {
                 placeholder="Your Message"
                 value={formData.message}
                 onChange={handleChange}
-                className={`${styles.formTextarea} ${errors.message ? styles.errorInput : ''}`}
+                required
+                className={styles.formTextarea}
                 rows="5"
               />
-              {errors.message && <span className={styles.errorText}>{errors.message}</span>}
             </div>
-
-            {submitStatus && (
-              <div className={`${styles.statusMessage} ${submitStatus.type === 'success' ? styles.success : styles.error}`}>
-                {submitStatus.message}
-              </div>
-            )}
 
             <button 
               type="submit" 
@@ -221,6 +167,6 @@ const ContactMe = () => {
       </div>
     </section>
   );
-}
+};
 
-export default ContactMe;
+export default ContactMeBackend;
