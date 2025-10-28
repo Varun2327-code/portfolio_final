@@ -1,20 +1,62 @@
 .scrollToTop {
   position: fixed;
-  bottom: 10px;
-  right: 20px;
-  background-color: #5a67d8;
-  color: white;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
   border: none;
-  border-radius: 60%;
-  width: 50px;
-  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #111 40%, #000 100%);
+  color: #ffcc33;
   font-size: 2rem;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: background-color 0.3s ease;
-  z-index: 1000;
+  box-shadow: 0 0 10px rgba(255, 204, 51, 0.4), 0 0 25px rgba(255, 204, 51, 0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.4s ease;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Fade-in visibility */
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover with golden glow pulse */
 .scrollToTop:hover {
-  background-color: #434190;
+  background: linear-gradient(145deg, #000, #1a1a1a);
+  box-shadow: 0 0 20px rgba(255, 204, 51, 0.6),
+              0 0 35px rgba(255, 204, 51, 0.3);
+  transform: translateY(-5px);
+}
+
+/* Arrow glow animation */
+.arrow {
+  display: block;
+  animation: glowPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px #ffcc33, 0 0 25px rgba(255, 204, 51, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 5px #ffcc33, 0 0 15px rgba(255, 204, 51, 0.2);
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .scrollToTop {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+    bottom: 20px;
+    right: 20px;
+  }
 }

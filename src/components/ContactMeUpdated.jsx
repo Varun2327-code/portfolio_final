@@ -15,7 +15,6 @@ const ContactMe = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear error when user starts typing
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: '' });
     }
@@ -99,27 +98,36 @@ const ContactMe = () => {
         <p className={styles.subtitle}>Let's create something amazing together</p>
         
         <div className={styles.contactContent}>
+          {/* === Left Side Info Section === */}
           <div className={styles.contactInfo}>
             <h3>Let's Talk</h3>
             <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
             
             <div className={styles.infoCards}>
-              <div className={styles.infoCard}>
+              {/* 📧 Email Card - Clickable Mailto */}
+              <a 
+                href="mailto:varunshrimal27@gmail.com" 
+                className={styles.infoCard}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div className={styles.icon}>📧</div>
                 <div>
                   <h4>Email</h4>
                   <p>varunshrimal27@gmail.com</p>
                 </div>
-              </div>
+              </a>
               
+              {/* 📍 Location */}
               <div className={styles.infoCard}>
                 <div className={styles.icon}>📍</div>
                 <div>
                   <h4>Location</h4>
-                  <p>Available Worldwide</p>
+                  <p>Vadodara</p>
                 </div>
               </div>
               
+              {/* ⚡ Response Time */}
               <div className={styles.infoCard}>
                 <div className={styles.icon}>⚡</div>
                 <div>
@@ -130,13 +138,15 @@ const ContactMe = () => {
             </div>
           </div>
 
+          {/* === Contact Form Section === */}
           <form className={styles.contactForm} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
+              <label htmlFor="name" className={styles.formLabel}>Name</label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Your Name"
+                placeholder="Enter your name"
                 value={formData.name}
                 onChange={handleChange}
                 className={`${styles.formInput} ${errors.name ? styles.errorInput : ''}`}
@@ -145,11 +155,12 @@ const ContactMe = () => {
             </div>
 
             <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.formLabel}>Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Your Email"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
                 className={`${styles.formInput} ${errors.email ? styles.errorInput : ''}`}
@@ -158,10 +169,11 @@ const ContactMe = () => {
             </div>
 
             <div className={styles.formGroup}>
+              <label htmlFor="message" className={styles.formLabel}>Message</label>
               <textarea
                 id="message"
                 name="message"
-                placeholder="Your Message"
+                placeholder="Enter your message"
                 value={formData.message}
                 onChange={handleChange}
                 className={`${styles.formTextarea} ${errors.message ? styles.errorInput : ''}`}
@@ -186,6 +198,7 @@ const ContactMe = () => {
           </form>
         </div>
 
+        {/* === Social Links === */}
         <div className={styles.socialLinks}>
           <a 
             href="https://www.linkedin.com/in/varun-shrimal-203705283" 
@@ -221,6 +234,6 @@ const ContactMe = () => {
       </div>
     </section>
   );
-}
+};
 
 export default ContactMe;

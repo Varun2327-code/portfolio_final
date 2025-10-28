@@ -6,7 +6,7 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [loopNum, setLoopNum] = useState(0)
   const [typingSpeed, setTypingSpeed] = useState(150)
-  
+
   const roles = ['Cybersecurity Analyst', 'Web Developer', 'Full Stack Developer']
   const fullText = roles[loopNum % roles.length]
 
@@ -45,7 +45,7 @@ const Hero = () => {
         <div className={styles.floatingElement}></div>
         <div className={styles.floatingElement}></div>
       </div>
-      
+
       <div className={styles.content}>
         <h1 className={styles.name}>VARUN SHRIMAL</h1>
         <p className={styles.role}>
@@ -53,12 +53,13 @@ const Hero = () => {
           <span className={styles.cursor}>|</span>
         </p>
         <p className={styles.intro}>
-          Passionate about building secure, scalable applications and protecting digital assets. 
+          Passionate about building secure, scalable applications and protecting digital assets.
           I combine cybersecurity expertise with modern web development to create robust solutions.
         </p>
+
         <div className={styles.buttons}>
-          <button 
-            onClick={() => scrollToSection('projects')} 
+          <button
+            onClick={() => scrollToSection('projects')}
             className={`${styles.button} ${styles.primary}`}
           >
             <span>View Projects</span>
@@ -66,8 +67,8 @@ const Hero = () => {
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
-          <button 
-            onClick={() => scrollToSection('contact')} 
+          <button
+            onClick={() => scrollToSection('contact')}
             className={`${styles.button} ${styles.secondary}`}
           >
             <span>Contact Me</span>
@@ -76,7 +77,7 @@ const Hero = () => {
             </svg>
           </button>
         </div>
-        
+
         <div className={styles.stats}>
           <div className={styles.stat}>
             <span className={styles.statNumber}>10+</span>
@@ -84,7 +85,7 @@ const Hero = () => {
           </div>
           <div className={styles.stat}>
             <span className={styles.statNumber}>FRESHER</span>
-            <span className={styles.statLabel}>Years Experience</span>
+            <span className={styles.statLabel}>Experience</span>
           </div>
           <div className={styles.stat}>
             <span className={styles.statNumber}>5+</span>

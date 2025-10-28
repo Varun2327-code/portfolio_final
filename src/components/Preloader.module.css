@@ -1,180 +1,185 @@
+/* ===== Base Layer ===== */
 .preloader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
-  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  background: radial-gradient(circle at center, #000 60%, #0a0a0a 100%);
+  overflow: hidden;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-.preloader.fadeOut {
+.fadeOut {
   opacity: 0;
   visibility: hidden;
 }
 
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
+/* ===== Background Motion ===== */
 .animatedBackground {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  inset: 0;
+  background: linear-gradient(45deg, #000, #1a1a1a, #000);
   background-size: 400% 400%;
-  animation: gradientShift 8s ease infinite;
-  opacity: 0.9;
+  animation: shimmer 6s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes gradientShift {
+@keyframes shimmer {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-.contentWrapper {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+/* ===== Soft Gold Light Rays ===== */
+.lightGlow {
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 220, 130, 0.1), transparent 70%);
+  animation: rotateLight 20s linear infinite;
+  z-index: 0;
 }
 
+@keyframes rotateLight {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Floating Gold Particles ===== */
+.glowParticles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, #ffcc33 0%, transparent 70%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float 4s ease-in-out infinite;
+  filter: blur(0.5px);
+}
+
+.particle:nth-child(odd) {
+  animation-duration: 5s;
+  filter: blur(1.5px);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); opacity: 0.8; }
+  50% { transform: translateY(-15px); opacity: 0.3; }
+}
+
+/* ===== Logo Text ===== */
+
 .logoContainer {
+  position: relative;
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .letter {
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  animation: letterBounce 1.5s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  font-size: 3.2rem;
+  font-weight: 800;
+  opacity: 0;
+  color: #f9d976;
+  text-shadow: 0 0 10px #f9d976, 0 0 25px rgba(249, 217, 118, 0.4);
+  animation: fadeInLetter 0.5s forwards, glowPulse 2s ease-in-out infinite;
 }
 
-.letter:nth-child(1) { animation-delay: 0s; }
-.letter:nth-child(2) { animation-delay: 0.1s; }
-.letter:nth-child(3) { animation-delay: 0.2s; }
-.letter:nth-child(4) { animation-delay: 0.3s; }
-.letter:nth-child(5) { animation-delay: 0.4s; }
+.letter:nth-child(1) { animation-delay: 0.1s; }
+.letter:nth-child(2) { animation-delay: 0.3s; }
+.letter:nth-child(3) { animation-delay: 0.5s; }
+.letter:nth-child(4) { animation-delay: 0.7s; }
+.letter:nth-child(5) { animation-delay: 0.9s; }
 
-@keyframes letterBounce {
-  0%, 100% { 
-    transform: translateY(0);
-    opacity: 0.8;
-  }
-  50% { 
-    transform: translateY(-20px);
-    opacity: 1;
-  }
+@keyframes fadeInLetter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 15px #f9d976, 0 0 30px rgba(255, 220, 130, 0.5); }
+  50% { text-shadow: 0 0 5px #f9d976, 0 0 10px rgba(255, 220, 130, 0.2); }
+}
+
+/* ===== Subtitle ===== */
 .subtitle {
-  font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.5rem;
-  animation: fadeInOut 2s ease-in-out infinite;
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+  color: #b9974e;
+  letter-spacing: 4px;
+  font-weight: 500;
+  opacity: 0;
+  animation: fadeInSubtitle 1.2s ease forwards;
+  animation-delay: 1s;
 }
 
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+@keyframes fadeInSubtitle {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== Loading Bar ===== */
 .loadingBar {
-  width: 200px;
+  width: 220px;
   height: 4px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 2px;
+  margin: 1rem auto;
   overflow: hidden;
-  margin-top: 1rem;
+  position: relative;
 }
 
 .loadingProgress {
   height: 100%;
-  background: linear-gradient(90deg, #fff, #f093fb);
-  border-radius: 2px;
-  animation: loadingProgress 2.5s ease-in-out infinite;
+  width: 0;
+  background: linear-gradient(90deg, #ffcc33, #ffb700, #ffcc33);
+  animation: progress 2.5s ease-in-out forwards;
+  box-shadow: 0 0 12px rgba(255, 204, 51, 0.6);
 }
 
-@keyframes loadingProgress {
-  0% { width: 0%; }
-  100% { width: 100%; }
+@keyframes progress {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
+/* ===== Dots Animation ===== */
 .dotsContainer {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 0.4rem;
 }
 
 .dot {
   width: 8px;
   height: 8px;
-  background-color: white;
+  background: #ffcc33;
   border-radius: 50%;
-  animation: dotPulse 1.5s ease-in-out infinite;
+  opacity: 0.6;
+  animation: blink 1.4s infinite ease-in-out;
 }
 
-.dot:nth-child(1) { animation-delay: 0s; }
-.dot:nth-child(2) { animation-delay: 0.3s; }
-.dot:nth-child(3) { animation-delay: 0.6s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
 
-@keyframes dotPulse {
-  0%, 100% { 
-    transform: scale(0.8);
-    opacity: 0.5;
-  }
-  50% { 
-    transform: scale(1.2);
-    opacity: 1;
-  }
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.3); }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .letter {
-    font-size: 2.5rem;
-  }
-  
-  .subtitle {
-    font-size: 1.2rem;
-    letter-spacing: 0.3rem;
-  }
-  
-  .loadingBar {
-    width: 150px;
-  }
-}
-
+/* ===== Responsive ===== */
 @media (max-width: 480px) {
-  .letter {
-    font-size: 2rem;
-  }
-  
-  .subtitle {
-    font-size: 1rem;
-    letter-spacing: 0.2rem;
-  }
-  
-  .logoContainer {
-    gap: 0.3rem;
-  }
+  .letter { font-size: 2.2rem; }
+  .loadingBar { width: 160px; }
 }

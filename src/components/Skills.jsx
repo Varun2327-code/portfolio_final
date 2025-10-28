@@ -8,9 +8,9 @@ const skillCategories = [
     skills: [
       { name: 'HTML', level: 95, icon: '🌐' },
       { name: 'CSS', level: 90, icon: '🎨' },
-      { name: 'JavaScript', level: 70, icon: '🟨' },
-      { name: 'React', level: 80, icon: '⚛️' },
-      { name: 'Tailwind CSS', level: 70, icon: '🔷' },
+      { name: 'JavaScript', level: 80, icon: '🟨' },
+      { name: 'React', level: 85, icon: '⚛️' },
+      { name: 'Tailwind CSS', level: 75, icon: '🔷' },
     ]
   },
   {
@@ -18,10 +18,11 @@ const skillCategories = [
     icon: '⚙️',
     skills: [
       { name: 'Node.js', level: 75, icon: '🟩' },
-      { name: 'Python', level: 60, icon: '🐍' },
-      { name: 'PHP', level: 50, icon: '🐘' },
+      { name: 'Python', level: 65, icon: '🐍' },
+      { name: 'PHP', level: 55, icon: '🐘' },
       { name: 'MySQL', level: 80, icon: '🟦' },
-      { name: 'MongoDB', level: 78, icon: '🍃' }
+      { name: 'MongoDB', level: 78, icon: '🍃' },
+      { name: 'Firebase', level: 75, icon: '🔥' }
     ]
   },
   {
@@ -29,9 +30,10 @@ const skillCategories = [
     icon: '🛠️',
     skills: [
       { name: 'Git', level: 90, icon: '🐙' },
-      { name: 'AWS', level: 70, icon: '☁️' },
-      { name: 'Cybersecurity', level: 45, icon: '🔒' },
-      { name: 'Linux', level: 50, icon: '🐧' }
+      { name: 'Cybersecurity', level: 50, icon: '🔒' },
+      { name: 'Linux', level: 45, icon: '🐧' },
+      { name: 'Wireshark', level: 50, icon: '🔍' },
+      { name: 'Nmap', level: 50, icon: '🗺️' }
     ]
   }
 ]
@@ -64,46 +66,18 @@ const Skills = () => {
       category.skills.forEach((skill, skillIndex) => {
         setTimeout(() => {
           setVisibleSkills(prev => [...prev, `${categoryIndex}-${skillIndex}`])
-        }, (categoryIndex * 200) + (skillIndex * 100))
+        }, (categoryIndex * 200) + (skillIndex * 120))
       })
     })
   }
 
-  const SkillProgressRing = ({ percentage, icon }) => {
-    const radius = 45
-    const circumference = 2 * Math.PI * radius
-    const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`
-
-    return (
-      <div className={styles.progressRing}>
-        <svg viewBox="0 0 120 120">
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#667eea" />
-              <stop offset="100%" stopColor="#764ba2" />
-            </linearGradient>
-          </defs>
-          <circle
-            className={styles.progressRingBg}
-            cx="60"
-            cy="60"
-            r={radius}
-          />
-          <circle
-            className={styles.progressRingFill}
-            cx="60"
-            cy="60"
-            r={radius}
-            strokeDasharray={strokeDasharray}
-          />
-        </svg>
-        <div className={styles.progressRingText}>{icon}</div>
-      </div>
-    )
-  }
-
   return (
     <section className={styles.skills} id="skills">
+      {/* Golden Glow Orbs */}
+      <div className={styles.glowOrb} style={{ top: '15%', left: '25%' }} />
+      <div className={styles.glowOrb} style={{ top: '40%', left: '75%' }} />
+      <div className={styles.glowOrb} style={{ top: '70%', left: '35%' }} />
+
       <h2 className={`${isVisible ? styles['fade-in'] : ''}`}>SKILLS</h2>
       
       <div className={styles.skillsGrid}>
@@ -151,8 +125,6 @@ const Skills = () => {
           </div>
         ))}
       </div>
-
-      
     </section>
   )
 }

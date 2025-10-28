@@ -4,33 +4,29 @@ import styles from './ScrollToTop.module.css'
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false)
 
-  const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setVisible(true)
-    } else {
-      setVisible(false)
-    }
-  }
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-
   useEffect(() => {
+    const toggleVisibility = () => {
+      setVisible(window.scrollY > 300)
+    }
+
     window.addEventListener('scroll', toggleVisibility)
     return () => window.removeEventListener('scroll', toggleVisibility)
   }, [])
 
-  if (!visible) {
-    return null
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
-    <button className={styles.scrollToTop} onClick={scrollToTop} aria-label="Scroll to top">
-      ↑
+    <button
+      className={`${styles.scrollToTop} ${visible ? styles.show : ''}`}
+      onClick={scrollToTop}
+      aria-label="Scroll to top"
+    >
+      <span className={styles.arrow}>↑</span>
     </button>
   )
 }

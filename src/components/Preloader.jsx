@@ -8,11 +8,9 @@ const Preloader = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setFadeOut(true)
-      setTimeout(() => setLoading(false), 500) // Fade out duration
-    }, 2500) // Show preloader for 2.5 seconds
-    return () => {
-      clearTimeout(timer)
-    }
+      setTimeout(() => setLoading(false), 600) // smooth fade duration
+    }, 2500)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!loading) return null
@@ -21,13 +19,18 @@ const Preloader = () => {
     <div className={`${styles.preloader} ${fadeOut ? styles.fadeOut : ''}`}>
       <div className={styles.container}>
         <div className={styles.animatedBackground}></div>
+
+        <div className={styles.glowParticles}>
+          {[...Array(8)].map((_, i) => (
+            <span key={i} className={styles.particle}></span>
+          ))}
+        </div>
+
         <div className={styles.contentWrapper}>
           <div className={styles.logoContainer}>
-            <div className={styles.letter}>V</div>
-            <div className={styles.letter}>A</div>
-            <div className={styles.letter}>R</div>
-            <div className={styles.letter}>U</div>
-            <div className={styles.letter}>N</div>
+            {'VARUN'.split('').map((letter, index) => (
+              <span key={index} className={styles.letter}>{letter}</span>
+            ))}
           </div>
           <div className={styles.subtitle}>Portfolio</div>
           <div className={styles.loadingBar}>

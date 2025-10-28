@@ -2,34 +2,28 @@ const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
 
-// POST /api/contact/submit - Submit contact form
+// ✅ Helper function to standardize responses
+const sendResponse = (res, status, success, message, data = null) => {
+  res.status(status).json({ success, message, data });
+};
+
+// ✅ POST /api/contact/submit — Submit contact form
 router.post('/submit', async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Validate required fields
+    // Validation
     if (!name || !email || !message) {
-      return res.status(400).json({
-        success: false,
-        error: 'All fields are required'
-      });
+      return sendResponse(res, 400, false, 'All fields are required');
     }
 
-    // Validate email format
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        success: false,
-        error: 'Please provide a valid email address'
-      });
+      return sendResponse(res, 400, false, 'Please provide a valid email address');
     }
 
-    // Validate message length
-    if (message.length < 10) {
-      return res.status(400).json({
-        success: false,
-        error: 'Message must be at least 10 characters long'
-      });
+    if (message.trim().length < 10) {
+      return sendResponse(res, 400, false, 'Message must be at least 10 characters long');
     }
 
     // Create new contact entry
@@ -39,84 +33,60 @@ router.post('/submit', async (req, res) => {
       message: message.trim()
     });
 
-    // Save to database
     await newContact.save();
 
-    // Send success response
-    res.status(201).json({
-      success: true,
-      message: 'Thank you for your message! I will get back to you soon.',
-      data: {
-        id: newContact._id,
-        name: newContact.name,
-        email: newContact.email,
-        createdAt: newContact.createdAt
-      }
+    return sendResponse(res, 201, true, 'Thank you for your message! I will get back to you soon.', {
+      id: newContact._id,
+      name: newContact.name,
+      email: newContact.email,
+      createdAt: newContact.createdAt
     });
-
   } catch (error) {
-    console.error('Error saving contact form:', error);
-    
+    console.error('❌ Error saving contact form:', error);
+
     if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map(err => err.message);
-      return res.status(400).json({
-        success: false,
-        error: 'Validation failed',
-        details: validationErrors
-      });
+      const details = Object.values(error.errors).map(err => err.message);
+      return sendResponse(res, 400, false, 'Validation failed', { details });
     }
 
-    res.status(500).json({
-      success: false,
-      error: 'An error occurred while processing your request. Please try again later.'
-    });
+    if (['MongoNetworkError', 'MongoTimeoutError'].includes(error.name)) {
+      console.error('⚠️ Database connection issue detected');
+      return sendResponse(res, 500, false, 'Database connection error. Please try again later.');
+    }
+
+    return sendResponse(res, 500, false, 'An unexpected error occurred while processing your request.');
   }
 });
 
-// GET /api/contact/messages - Get all contact messages (for admin)
+// ✅ GET /api/contact/messages — Fetch all messages (for admin)
 router.get('/messages', async (req, res) => {
   try {
     const messages = await Contact.find().sort({ createdAt: -1 });
-    res.json({
-      success: true,
+    return sendResponse(res, 200, true, 'Messages fetched successfully', {
       count: messages.length,
-      data: messages
+      messages
     });
   } catch (error) {
-    console.error('Error fetching messages:', error);
-    res.status(500).json({
-      success: false,
-      error: 'An error occurred while fetching messages'
-    });
+    console.error('❌ Error fetching messages:', error);
+    return sendResponse(res, 500, false, 'An error occurred while fetching messages');
   }
 });
 
-// GET /api/contact/messages/:id - Get single message
+// ✅ GET /api/contact/messages/:id — Fetch single message
 router.get('/messages/:id', async (req, res) => {
   try {
     const message = await Contact.findById(req.params.id);
-    
     if (!message) {
-      return res.status(404).json({
-        success: false,
-        error: 'Message not found'
-      });
+      return sendResponse(res, 404, false, 'Message not found');
     }
-
-    res.json({
-      success: true,
-      data: message
-    });
+    return sendResponse(res, 200, true, 'Message fetched successfully', message);
   } catch (error) {
-    console.error('Error fetching message:', error);
-    res.status(500).json({
-      success: false,
-      error: 'An error occurred while fetching the message'
-    });
+    console.error('❌ Error fetching message:', error);
+    return sendResponse(res, 500, false, 'An error occurred while fetching the message');
   }
 });
 
-// PUT /api/contact/messages/:id/read - Mark message as read
+// ✅ PUT /api/contact/messages/:id/read — Mark message as read
 router.put('/messages/:id/read', async (req, res) => {
   try {
     const message = await Contact.findByIdAndUpdate(
@@ -126,23 +96,13 @@ router.put('/messages/:id/read', async (req, res) => {
     );
 
     if (!message) {
-      return res.status(404).json({
-        success: false,
-        error: 'Message not found'
-      });
+      return sendResponse(res, 404, false, 'Message not found');
     }
 
-    res.json({
-      success: true,
-      message: 'Message marked as read',
-      data: message
-    });
+    return sendResponse(res, 200, true, 'Message marked as read', message);
   } catch (error) {
-    console.error('Error updating message:', error);
-    res.status(500).json({
-      success: false,
-      error: 'An error occurred while updating the message'
-    });
+    console.error('❌ Error updating message:', error);
+    return sendResponse(res, 500, false, 'An error occurred while updating the message');
   }
 });
 
