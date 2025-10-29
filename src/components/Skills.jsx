@@ -31,7 +31,7 @@ const skillCategories = [
     skills: [
       { name: 'Git', level: 90, icon: '🐙' },
       { name: 'Cybersecurity', level: 50, icon: '🔒' },
-      { name: 'Linux', level: 45, icon: '🐧' },
+      { name: 'Linux', level: 80, icon: '🐧' },
       { name: 'Wireshark', level: 50, icon: '🔍' },
       { name: 'Nmap', level: 50, icon: '🗺️' }
     ]
