@@ -1,3 +1,4 @@
+//server/models/Contact.js
 const mongoose = require('mongoose');
 
 // Define schema with improved indexing and safety

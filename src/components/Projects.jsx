@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import styles from './Projects.module.css'
 import societyManagementImage from '../assets/society-management.png'
 import courierManagementImage from '../assets/courier-management.png'
@@ -11,8 +10,10 @@ import passwordStrengthCheckerImage from '../assets/password strength checker.jp
 import networkIntrusionDetectionSystemImage from '../assets/Network Intrusion Detection System (NIDS).png'
 import imageEncryptionDecryptionSystemImage from '../assets/Image Encryption and Decryption System.png'
 import FoodDeliveryPlatformImage from '../assets/Food Delivery Platform.jpg'
+import { useState } from 'react'
+
 const projects = [
-   {
+  {
     title: 'Food Delivery Platform',
     image: FoodDeliveryPlatformImage,
     description: 'A multi-vendor food ordering system where users can browse restaurants, place orders, track deliveries, and make payments online.',
@@ -20,7 +21,8 @@ const projects = [
     liveDemo: 'https://food-delivery-demo.com',
     techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe'],
     category: 'web',
-    color: '#FF6B35'
+    color: '#FF6B35',
+    wip: true // ⚠️ WIP alert will show only for this project
   },
   {
     title: 'Password Strength Checker',
@@ -30,98 +32,108 @@ const projects = [
     liveDemo: 'https://password-checker-demo.com',
     techStack: ['Python', 'Linux', 'Regex'],
     category: 'cybersecurity',
-    color: '#4ECDC4'
+    color: '#4ECDC4',
+    wip: true  // ⚠️ WIP alert will show only for this project
   },
-   {
+  {
     title: 'Smart Society Management',
     image: smartSocietyImage,
-    description: 'A comprehensive smart society management solution built with React and Node.js, featuring real-time visitor tracking, facility booking, member management, and communication tools. Currently operational and managing multiple residential societies with Firebase backend.',
+    description: 'A comprehensive smart society system with visitor tracking, booking, and communication tools.',
     github: 'https://github.com/Varun2327-code/Smartsocietymanagementfrontend',
     liveDemo: 'https://smartsocietymanagementfrontend.vercel.app/',
     techStack: ['React', 'Node.js', 'Firebase', 'Express', 'Material-UI'],
     category: 'web',
-    color: '#FF8C42'
+    color: '#FF8C42',
+    wip: false
   },
-   {
+  {
     title: 'Network Intrusion Detection System (NIDS)',
     image: networkIntrusionDetectionSystemImage,
-    description: 'A machine-learning powered cybersecurity system that monitors network traffic and detects suspicious or malicious activities in real time.',
+    description: 'A real-time ML powered traffic monitoring & intrusion detection system.',
     github: 'https://github.com/Varun2327-code/nids',
     liveDemo: 'https://nids-demo.com',
     techStack: ['Python', 'Linux', 'Scikit-learn', 'TensorFlow'],
     category: 'cybersecurity',
-    color: '#45B7D1'
+    color: '#45B7D1',
+    wip: false
   },
   {
     title: 'Image Encryption & Decryption System',
     image: imageEncryptionDecryptionSystemImage,
-    description: 'A cryptography project that uses AES and RSA algorithms to securely encrypt and decrypt image files, ensuring privacy and data protection.',
+    description: 'Securely encrypt and decrypt images using AES and RSA.',
     github: 'https://github.com/Varun2327-code/image-encryption',
     liveDemo: 'https://image-encryption-demo.com',
-    techStack: ['Python', 'Linux', 'Cryptography', 'AES', 'RSA'],
+    techStack: ['Python', 'Linux', 'Crypto', 'AES', 'RSA'],
     category: 'cybersecurity',
-    color: '#96CEB4'
+    color: '#96CEB4',
+    wip: true  // ⚠️ Only this will show WIP alert
   },
   {
     title: 'Society Management System',
     image: societyManagementImage,
-    description: 'A comprehensive Android-based society management solution enabling residents and administrators to efficiently handle society-related tasks.',
+    description: 'Android app to manage society tasks for residents and admins.',
     github: 'https://github.com/Varun2327-code/My-society-management-system',
     liveDemo: 'https://project-one-demo.com',
     techStack: ['Android', 'Firebase', 'Java'],
     category: 'mobile',
-    color: '#FF6B6B'
+    color: '#FF6B6B',
+    wip: false
   },
   {
     title: 'Courier Management System',
     image: courierManagementImage,
-    description: 'An application that streamlines the booking, tracking, and delivery of parcels for customers and administrators.',
+    description: 'Streamline booking and tracking of parcels.',
     github: 'https://github.com/Varun2327-code/courier_managment_system',
     liveDemo: 'https://project-two-demo.com',
     techStack: ['Java', 'Spring Boot', 'MySQL'],
     category: 'web',
-    color: '#4ECDC4'
+    color: '#4ECDC4',
+    wip: false
   },
   {
     title: 'YouTube Clone',
     image: youtubeCloneImage,
-    description: 'Developed a YouTube Clone using React.js and YouTube API, featuring video search, playback, channel view, and responsive UI.',
+    description: 'Video search & playback using YouTube API.',
     github: 'https://github.com/Varun2327-code/Youtubeclone',
     liveDemo: 'youtubeclone-chi-blond.vercel.app',
     techStack: ['React', 'YouTube API', 'CSS3'],
     category: 'web',
-    color: '#45B7D1'
+    color: '#45B7D1',
+    wip: false
   },
   {
     title: 'Music Player',
     image: musicPlayerImage,
-    description: 'Created a Music Player Web App with HTML, CSS, and JavaScript, enabling playlist creation, play/pause/seek controls, and animations.',
+    description: 'Music app with playlist and controls.',
     github: 'https://github.com/Varun2327-code/music_app-frontend',
     liveDemo: 'https://music-app-frontend-eta.vercel.app/',
-    techStack: ['HTML', 'CSS', 'JavaScript'],
+    techStack: ['HTML', 'CSS', 'JS'],
     category: 'web',
-    color: '#96CEB4'
+    color: '#96CEB4',
+    wip: false
   },
   {
-    title: 'Image Collection',
+    title: 'Image Market Clone',
     image: imageCollectionImage,
-    description: 'Designed and developed a personal portfolio website using React.js, showcasing projects, skills, and contact information with a modern UI.',
+    description: 'Stock image browsing app clone.',
     github: 'https://github.com/Varun2327-code/ImageMarketClone',
     liveDemo: 'https://image-market-clone.vercel.app/',
-    techStack: ['React', 'CSS3', 'Responsive Design'],
+    techStack: ['React', 'CSS3', 'Responsive'],
     category: 'web',
-    color: '#FECA57'
+    color: '#FECA57',
+    wip: false
   },
   {
     title: 'Medical Dashboard',
     image: medicalDashboardImage,
-    description: 'A modern hospital admin dashboard for managing patients, appointments, billing, and medical statistics with interactive charts and a clean UI.',
+    description: 'Hospital admin dashboard with stats & charts.',
     github: 'https://github.com/Varun2327-code/medical-frontend',
-    liveDemo: 'https://medical-frontend-51u8y1uv9-varuns-projects-599513ab.vercel.app',
-    techStack: ['React', 'Chart.js', 'CSS3'],
+    liveDemo: 'https://medical-frontend.vercel.app',
+    techStack: ['React', 'Chart.js', 'CSS'],
     category: 'dashboard',
-    color: '#DDA0DD'
-  },
+    color: '#DDA0DD',
+    wip: false
+  }
 ]
 
 const Projects = () => {
@@ -133,14 +145,14 @@ const Projects = () => {
 
   const filteredProjects = projects.filter(project => {
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.techStack.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.techStack.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
     return matchesCategory && matchesSearch
   })
 
   const displayProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6)
-  const hasMoreProjects = filteredProjects.length > 6
   const hiddenCount = filteredProjects.length - 6
 
   const categories = [
@@ -148,7 +160,7 @@ const Projects = () => {
     { id: 'web', name: 'Web Apps', icon: '💻' },
     { id: 'mobile', name: 'Mobile Apps', icon: '📱' },
     { id: 'dashboard', name: 'Dashboards', icon: '📊' },
-    { id: 'cybersecurity', name: 'Cybersecurity', icon: '🔒' }
+    { id: 'cybersecurity', name: 'Cyber Tools', icon: '🔒' }
   ]
 
   const handleShowMore = () => {
@@ -159,18 +171,16 @@ const Projects = () => {
 
   const handleShowLess = () => {
     setShowAll(false)
-    // Scroll to top of projects section
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <section className={styles.projects} id="projects">
       <div className={styles.container}>
+        
         <div className={styles.header}>
           <h2 className={styles.title}>Featured Projects</h2>
-          <p className={styles.subtitle}>
-            Explore my latest work and creative solutions
-          </p>
+          <p className={styles.subtitle}>Explore my latest work and creative solutions</p>
         </div>
 
         <div className={styles.controls}>
@@ -201,9 +211,9 @@ const Projects = () => {
 
         <div className={`${styles.projectsGrid} ${isExpanding ? styles.expanding : ''}`}>
           {displayProjects.map((project, index) => (
-            <div 
-              key={index} 
-              className={`${styles.projectCard} ${showAll && index >= 6 ? styles.fadeIn : ''}`}
+            <div
+              key={index}
+              className={styles.projectCard}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{ '--accent-color': project.color }}
@@ -217,48 +227,59 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className={styles.cardContent}>
                 <h3 className={styles.cardTitle}>{project.title}</h3>
                 <p className={styles.cardDescription}>{project.description}</p>
-                
+
                 <div className={styles.techStack}>
-                  {project.techStack.map((tech, idx) => (
-                    <span key={idx} className={styles.techTag}>{tech}</span>
+                  {project.techStack.map((tech, i) => (
+                    <span key={i} className={styles.techTag}>{tech}</span>
                   ))}
                 </div>
-                
+
                 <div className={styles.cardActions}>
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  {/* Code Button */}
+                  <a
+                    href="#"
                     className={`${styles.btn} ${styles.btnPrimary}`}
+                    onClick={(e) => {
+                      if (project.wip) {
+                        e.preventDefault()
+                        alert("⚠️ This project is a Work in Progress and currently not live.")
+                      } else {
+                        window.open(project.github, '_blank')
+                      }
+                    }}
                   >
-                    <span>🐙</span>
-                    Code
+                    <span>🐙</span> Code
                   </a>
-                  <a 
-                    href={project.liveDemo} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+
+                  {/* Live Demo Button */}
+                  <a
+                    href="#"
                     className={`${styles.btn} ${styles.btnSecondary}`}
+                    onClick={(e) => {
+                      if (project.wip) {
+                        e.preventDefault()
+                        alert("⚠️ This project is a Work in Progress and currently not live.")
+                      } else {
+                        window.open(project.liveDemo, '_blank')
+                      }
+                    }}
                   >
-                    <span>🚀</span>
-                    Live Demo
+                    <span>🚀</span> Live Demo
                   </a>
                 </div>
+
               </div>
             </div>
           ))}
         </div>
-        
-        {hasMoreProjects && !showAll && (
+
+        {!showAll && filteredProjects.length > 6 && (
           <div className={styles.showMoreContainer}>
-            <button 
-              onClick={handleShowMore}
-              className={styles.showMoreBtn}
-            >
+            <button onClick={handleShowMore} className={styles.showMoreBtn}>
               <span>Show More</span>
               <span className={styles.showMoreIcon}>↓</span>
               <span className={styles.showMoreCount}>+{hiddenCount} more</span>
@@ -268,21 +289,19 @@ const Projects = () => {
 
         {showAll && filteredProjects.length > 6 && (
           <div className={styles.showLessContainer}>
-            <button 
-              onClick={handleShowLess}
-              className={styles.showLessBtn}
-            >
+            <button onClick={handleShowLess} className={styles.showLessBtn}>
               <span>Show Less</span>
               <span className={styles.showLessIcon}>↑</span>
             </button>
           </div>
         )}
-        
+
         {filteredProjects.length === 0 && (
           <div className={styles.emptyState}>
             <p>No projects found matching your criteria.</p>
           </div>
         )}
+
       </div>
     </section>
   )

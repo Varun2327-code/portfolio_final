@@ -1,3 +1,4 @@
+//server/routes/contact.js
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
