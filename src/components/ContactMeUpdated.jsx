@@ -210,25 +210,15 @@ const ContactMe = () => {
             <span className={styles.socialIcon}>💼</span>
             LinkedIn
           </a>
-          <a 
-            href="https://github.com/Varun2327-code" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://github.com/Varun2327-code"
+            target="_blank"
+            rel="noopener noreferrer"
             className={styles.socialLink}
             aria-label="GitHub"
           >
             <span className={styles.socialIcon}>🐱</span>
             GitHub
-          </a>
-          <a 
-            href="https://instagram.com/yourprofile" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={styles.socialLink}
-            aria-label="Instagram"
-          >
-            <span className={styles.socialIcon}>📸</span>
-            Instagram
           </a>
         </div>
       </div>
