@@ -7,13 +7,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: '*', // or specify your frontend domain for more security
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// ✅ Allow preflight explicitly
+app.options("*", cors({ origin: "http://localhost:5173" }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 // MongoDB connection with improved options & error logging
 const mongoURI = process.env.MONGODB_URI;
