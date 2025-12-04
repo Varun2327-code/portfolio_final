@@ -37,7 +37,7 @@ const projects = [
     image: smartSocietyImage,
     description: 'A comprehensive smart society management solution built with React and Node.js, featuring real-time visitor tracking, facility booking, member management, and communication tools. Currently operational and managing multiple residential societies with Firebase backend.',
     github: 'https://github.com/Varun2327-code/Smartsocietymanagementfrontend',
-    liveDemo: 'smartsocietymanagementfrontend.vercel.app',
+    liveDemo: 'https://smartsocietymanagementfrontend.vercel.app/',
     techStack: ['React', 'Node.js', 'Firebase', 'Express', 'Material-UI'],
     category: 'web',
     color: '#FF8C42'
