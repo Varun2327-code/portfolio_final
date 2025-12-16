@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from './ContactMe.module.css';
+
+/* ================= EmailJS Config ================= */
+const EMAILJS_SERVICE_ID = 'service_75xx3c3';
+const EMAILJS_TEMPLATE_ID = 'template_m6lyjgc';
+const EMAILJS_PUBLIC_KEY = 'RNW4YECMg1KNDiWrX';
 
 const ContactMeBackend = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +17,11 @@ const ContactMeBackend = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errors, setErrors] = useState({});
+
+  /* 🔥 Initialize EmailJS once */
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +57,6 @@ const ContactMeBackend = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setIsSubmitting(true);
@@ -55,14 +64,13 @@ const ContactMeBackend = () => {
 
     try {
       await emailjs.send(
-        'service_75xx3c3',          // ✅ Service ID
-        'template_m6lyjgc',         // ✅ Template ID
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-        },
-        'RNW4YECMg1KNDiWrX'          // ✅ Public Key
+        }
       );
 
       setSubmitStatus({
@@ -87,57 +95,130 @@ const ContactMeBackend = () => {
     <section className={styles.contact} id="contact">
       <div className={styles.contactContainer}>
         <h2>Get In Touch</h2>
-        <p className={styles.subtitle}>Let's create something amazing together</p>
+        <p className={styles.subtitle}>
+          Let's create something amazing together
+        </p>
 
-        <form className={styles.contactForm} onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`${styles.formInput} ${errors.name ? styles.errorInput : ''}`}
-            />
-            {errors.name && <span className={styles.errorText}>{errors.name}</span>}
-          </div>
+        <div className={styles.contactContent}>
 
-          <div className={styles.formGroup}>
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`${styles.formInput} ${errors.email ? styles.errorInput : ''}`}
-            />
-            {errors.email && <span className={styles.errorText}>{errors.email}</span>}
-          </div>
+          {/* ===== Left Info Section ===== */}
+          <div className={styles.contactInfo}>
+            <h3>Let's Talk</h3>
+            <p>
+              I'm always open to discussing new projects, creative ideas
+              or opportunities to be part of your vision.
+            </p>
 
-          <div className={styles.formGroup}>
-            <label>Message</label>
-            <textarea
-              name="message"
-              rows="5"
-              value={formData.message}
-              onChange={handleChange}
-              className={`${styles.formTextarea} ${errors.message ? styles.errorInput : ''}`}
-            />
-            {errors.message && <span className={styles.errorText}>{errors.message}</span>}
-          </div>
+            <div className={styles.infoCards}>
 
-          {submitStatus && (
-            <div className={`${styles.statusMessage} ${
-              submitStatus.type === 'success' ? styles.success : styles.error
-            }`}>
-              {submitStatus.message}
+              {/* Email */}
+              <a
+                href="mailto:varunshrimal27@gmail.com"
+                className={styles.infoCard}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className={styles.icon}>📧</div>
+                <div>
+                  <h4>Email</h4>
+                  <p>varunshrimal27@gmail.com</p>
+                </div>
+              </a>
+
+              {/* Location */}
+              <div className={styles.infoCard}>
+                <div className={styles.icon}>📍</div>
+                <div>
+                  <h4>Location</h4>
+                  <p>Vadodara</p>
+                </div>
+              </div>
+
+              {/* Response Time */}
+              <div className={styles.infoCard}>
+                <div className={styles.icon}>⚡</div>
+                <div>
+                  <h4>Response Time</h4>
+                  <p>Within 24 hours</p>
+                </div>
+              </div>
+
             </div>
-          )}
+          </div>
 
-          <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
+          {/* ===== Contact Form ===== */}
+          <form className={styles.contactForm} onSubmit={handleSubmit}>
+
+            <div className={styles.formGroup}>
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`${styles.formInput} ${
+                  errors.name ? styles.errorInput : ''
+                }`}
+              />
+              {errors.name && (
+                <span className={styles.errorText}>{errors.name}</span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`${styles.formInput} ${
+                  errors.email ? styles.errorInput : ''
+                }`}
+              />
+              {errors.email && (
+                <span className={styles.errorText}>{errors.email}</span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Message</label>
+              <textarea
+                name="message"
+                rows="5"
+                value={formData.message}
+                onChange={handleChange}
+                className={`${styles.formTextarea} ${
+                  errors.message ? styles.errorInput : ''
+                }`}
+              />
+              {errors.message && (
+                <span className={styles.errorText}>{errors.message}</span>
+              )}
+            </div>
+
+            {submitStatus && (
+              <div
+                className={`${styles.statusMessage} ${
+                  submitStatus.type === 'success'
+                    ? styles.success
+                    : styles.error
+                }`}
+              >
+                {submitStatus.message}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={styles.submitButton}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+
+          </form>
+        </div>
       </div>
     </section>
   );
