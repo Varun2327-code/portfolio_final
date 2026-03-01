@@ -17,15 +17,15 @@ const AboutMeComplete = () => {
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => { if(sectionRef.current) observer.unobserve(sectionRef.current); }
+    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); }
   }, []);
 
   const handleDownloadResume = () => {
     setDownloadStatus('downloading');
     setTimeout(() => {
       const link = document.createElement('a');
-      link.href = '/VARUN-SHRIMAL-RESUME.pdf';
-      link.download = 'VARUN-SHRIMAL-RESUME.pdf';
+      link.href = '/VARUN_SHRIMAL_RESUME.pdf';
+      link.download = 'VARUN_SHRIMAL_RESUME.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -35,10 +35,10 @@ const AboutMeComplete = () => {
   };
 
   const skills = {
-    'Frontend': ['HTML', 'CSS', 'JavaScript', 'React','Tailwind CSS', 'Bootstrap'],
+    'Frontend': ['HTML', 'CSS', 'JavaScript', 'React', 'Tailwind CSS', 'Bootstrap'],
     'Backend': ['Node.js', 'Express.js', 'PHP', 'Python', 'RESTful APIs'],
     'Database': ['MySQL', 'MongoDB', 'Firebase', 'Firestore'],
-    'Security': ['Cybersecurity' , 'Ethical Hacking', 'Network Security', 'Vulnerability Assessment', 'Penetration Testing'],
+    'Security': ['Cybersecurity', 'Ethical Hacking', 'Network Security', 'Vulnerability Assessment', 'Penetration Testing'],
     'DevOps': ['Git', 'Linux', 'VS Code', 'XAMPP', 'Postman', 'Nodemon'],
     'Tools': ['VS Code', 'Postman', 'Nodemon', 'Wireshark', 'Nmap', 'Burp Suite', 'Metasploit', 'Kali Linux']
   };
@@ -57,7 +57,7 @@ const AboutMeComplete = () => {
       organization: 'Dungarpur Public School',
       description: 'Completed Higher Secondary education with a focus on Commerce stream, achieving strong academic results and developing foundational skills for further studies.',
       icon: '🎓'
-      },
+    },
   ];
 
   const stats = [
@@ -98,7 +98,7 @@ const AboutMeComplete = () => {
             </p>
             <div className={styles.ctaButtons}>
               <a href="#contact" className={styles.ctaButton}>Get In Touch</a>
-              <button 
+              <button
                 onClick={handleDownloadResume}
                 className={`${styles.ctaButton} ${styles.secondary}`}
                 disabled={downloadStatus === 'downloading'}
@@ -130,8 +130,8 @@ const AboutMeComplete = () => {
           <h3>Technical Skills</h3>
           <div className={styles.skillsGrid}>
             {Object.entries(skills).map(([category, skillList]) => (
-              <div 
-                key={category} 
+              <div
+                key={category}
                 className={`${styles.skillCategory} ${activeSkill === category ? styles.active : ''}`}
                 onMouseEnter={() => setActiveSkill(category)}
                 onMouseLeave={() => setActiveSkill(null)}
