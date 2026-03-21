@@ -14,17 +14,16 @@ import { useState } from 'react'
 
 const projects = [
   {
-    title: 'Food Delivery Platform',
+    title: 'Multi-Vendor Food Delivery Platform',
     image: FoodDeliveryPlatformImage,
     description:
-      'A real-world multi-vendor food delivery system with role-based dashboards for Customers, Vendors, Delivery Partners, and Super Admin, including order tracking, payments, analytics, and a public viewer interface.',
-    github: 'https://github.com/Varun2327-code/food-delivery-platform',
-    liveDemo: 'https://food-delivery-demo.com',
-    techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe'],
+      'A real-world multi-vendor food delivery system with role-based dashboards for Customers, Vendors, Delivery Partners, and Super Admin, Built a platform supporting 100+ restaurants with real-time order tracking.',
+    github: 'https://github.com/Varun2327-code/QUICKBITES',
+    liveDemo: 'https://quickbites-khaki.vercel.app/',
+    techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Firebase'],
     category: 'web',
     color: '#FF6B35',
-    wip: true,
-    progress: 65
+    wip: false,
   },
   {
     title: 'Smart Society Management',
@@ -112,7 +111,7 @@ const projects = [
     image: youtubeCloneImage,
     description: 'Video search & playback using YouTube API.',
     github: 'https://github.com/Varun2327-code/Youtubeclone',
-    liveDemo: 'youtubeclone-chi-blond.vercel.app',
+    liveDemo: 'https://youtubeclone-chi-blond.vercel.app/',
     techStack: ['React', 'YouTube API', 'CSS3'],
     category: 'web',
     color: '#45B7D1',
@@ -179,9 +178,8 @@ const Projects = () => {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`${styles.filterTab} ${
-                  selectedCategory === cat ? styles.active : ''
-                }`}
+                className={`${styles.filterTab} ${selectedCategory === cat ? styles.active : ''
+                  }`}
               >
                 {cat.toUpperCase()}
               </button>

@@ -24,8 +24,8 @@ const AboutMeComplete = () => {
     setDownloadStatus('downloading');
     setTimeout(() => {
       const link = document.createElement('a');
-      link.href = '/VARUN_SHRIMAL_RESUME.pdf';
-      link.download = 'VARUN_SHRIMAL_RESUME.pdf';
+      link.href = '/varun_Shrimal-Resume.pdf';
+      link.download = 'varun_Shrimal-Resume.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -45,7 +45,7 @@ const AboutMeComplete = () => {
 
   const timeline = [
     {
-      date: '2023 - Present',
+      date: '2022 - 2026',
       title: 'Integrated MCA - Cyber Security',
       organization: 'Parul University',
       description: 'Pursuing advanced studies in Cyber Security and Forensics with focus on secure application development, Web development, and digital forensics.',
@@ -81,7 +81,7 @@ const AboutMeComplete = () => {
               <img src={profilePhoto} alt="Varun Shrimal" className={styles.profileImage} loading="lazy" />
               <div className={styles.profileOverlay}></div>
               <div className={styles.profileInfo}>
-                <h3>Varun Shrimal</h3>
+                <h3>VARUN SHRIMAL</h3>
                 <p>Cyber Security Analyst & Full Stack Developer</p>
               </div>
             </div>

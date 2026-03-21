@@ -53,8 +53,9 @@ const Hero = () => {
           <span className={styles.cursor}>|</span>
         </p>
         <p className={styles.intro}>
-          Passionate about building secure, scalable applications and protecting digital assets.
-          I combine cybersecurity expertise with modern web development to create robust solutions.
+          Full Stack Developer specializing in the MERN Stack with a strong focus on Web Security. I build fast, scalable,
+          and secure web applications while writing clean and efficient code. Passionate about creating digital experiences that are
+          both performant and protected.
         </p>
 
         <div className={styles.buttons}>
