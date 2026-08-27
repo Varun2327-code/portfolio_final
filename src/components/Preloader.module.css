@@ -1,185 +1,191 @@
-/* ===== Base Layer ===== */
 .preloader {
   position: fixed;
   inset: 0;
+  background: #000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, #000 60%, #0a0a0a 100%);
-  overflow: hidden;
+  justify-content: center;
   z-index: 9999;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
 }
 
-.fadeOut {
+.preloader.leaving {
+  transform: translateY(-100%);
   opacity: 0;
-  visibility: hidden;
 }
 
-/* ===== Background Motion ===== */
-.animatedBackground {
+/* Grid */
+.grid {
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, #000, #1a1a1a, #000);
-  background-size: 400% 400%;
-  animation: shimmer 6s ease-in-out infinite;
-  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 180, 216, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 180, 216, 0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridFade 3s ease infinite alternate;
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes gridFade {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
 }
 
-/* ===== Soft Gold Light Rays ===== */
-.lightGlow {
-  position: absolute;
-  width: 300%;
-  height: 300%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 220, 130, 0.1), transparent 70%);
-  animation: rotateLight 20s linear infinite;
-  z-index: 0;
-}
-
-@keyframes rotateLight {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ===== Floating Gold Particles ===== */
-.glowParticles {
+/* Particles */
+.particles {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  z-index: 1;
+  pointer-events: none;
 }
 
 .particle {
   position: absolute;
-  background: radial-gradient(circle, #ffcc33 0%, transparent 70%);
-  width: 6px;
-  height: 6px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
-  opacity: 0.6;
-  animation: float 4s ease-in-out infinite;
-  filter: blur(0.5px);
+  background: var(--color-accent-cyan, #00F5FF);
+  opacity: 0;
+  animation: particlePulse var(--dur, 2s) ease-in-out infinite;
 }
 
-.particle:nth-child(odd) {
-  animation-duration: 5s;
-  filter: blur(1.5px);
+@keyframes particlePulse {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 0.6; transform: scale(1); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); opacity: 0.8; }
-  50% { transform: translateY(-15px); opacity: 0.3; }
-}
-
-/* ===== Logo Text ===== */
-
-.logoContainer {
+/* Content */
+.content {
   position: relative;
+  z-index: 1;
   display: flex;
-  gap: 0.5rem;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 0.5rem;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  min-width: min(500px, 90vw);
 }
 
-.letter {
-  font-size: 3.2rem;
-  font-weight: 800;
-  opacity: 0;
-  color: #f9d976;
-  text-shadow: 0 0 10px #f9d976, 0 0 25px rgba(249, 217, 118, 0.4);
-  animation: fadeInLetter 0.5s forwards, glowPulse 2s ease-in-out infinite;
-}
-
-.letter:nth-child(1) { animation-delay: 0.1s; }
-.letter:nth-child(2) { animation-delay: 0.3s; }
-.letter:nth-child(3) { animation-delay: 0.5s; }
-.letter:nth-child(4) { animation-delay: 0.7s; }
-.letter:nth-child(5) { animation-delay: 0.9s; }
-
-@keyframes fadeInLetter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes glowPulse {
-  0%, 100% { text-shadow: 0 0 15px #f9d976, 0 0 30px rgba(255, 220, 130, 0.5); }
-  50% { text-shadow: 0 0 5px #f9d976, 0 0 10px rgba(255, 220, 130, 0.2); }
-}
-
-/* ===== Subtitle ===== */
-.subtitle {
-  font-size: 1.2rem;
-  margin-top: 0.2rem;
-  color: #b9974e;
-  letter-spacing: 4px;
-  font-weight: 500;
-  opacity: 0;
-  animation: fadeInSubtitle 1.2s ease forwards;
-  animation-delay: 1s;
-}
-
-@keyframes fadeInSubtitle {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== Loading Bar ===== */
-.loadingBar {
-  width: 220px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 2px;
-  margin: 1rem auto;
-  overflow: hidden;
-  position: relative;
-}
-
-.loadingProgress {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #ffcc33, #ffb700, #ffcc33);
-  animation: progress 2.5s ease-in-out forwards;
-  box-shadow: 0 0 12px rgba(255, 204, 51, 0.6);
-}
-
-@keyframes progress {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-/* ===== Dots Animation ===== */
-.dotsContainer {
+/* Logo */
+.logo {
   display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 0.4rem;
+  align-items: baseline;
+  gap: 0.1em;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  letter-spacing: -0.02em;
+  animation: logoReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  background: #ffcc33;
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: blink 1.4s infinite ease-in-out;
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes blink {
-  0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
-  40% { opacity: 1; transform: scale(1.3); }
+.logoV {
+  background: linear-gradient(135deg, #00B4D8, #00F5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.2em;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 480px) {
-  .letter { font-size: 2.2rem; }
-  .loadingBar { width: 160px; }
+.logoPorfolio {
+  color: #E8EAF0;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+}
+
+/* Name */
+.name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: #8892A4;
+  text-transform: uppercase;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Terminal */
+.terminal {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  width: 100%;
+  min-height: 170px;
+  text-align: left;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+
+.terminalLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.7rem, 1.8vw, 0.82rem);
+  color: #39FF14;
+  line-height: 1.8;
+  animation: lineReveal 0.3s ease both;
+}
+
+@keyframes lineReveal {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.terminalText {
+  opacity: 0.9;
+}
+
+/* Progress */
+.progressSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  animation: fadeUp 0.8s 0.7s ease both;
+}
+
+.progressBar {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 180, 216, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00B4D8, #00F5FF);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.8);
+  transition: width 0.1s linear;
+}
+
+.progressLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  letter-spacing: 0.15em;
+  min-height: 1.5em;
+}
+
+.progressNum {
+  color: #8892A4;
+}
+
+.accessGranted {
+  color: #39FF14;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  animation: grantedPulse 0.5s ease both;
+}
+
+@keyframes grantedPulse {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0A1428"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+
+    <!-- Main V & Shield Glow Gradient -->
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5FF"/>
+      <stop offset="50%" stop-color="#00B4D8"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <!-- Highlight Gradient -->
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#39FF14"/>
+      <stop offset="100%" stop-color="#00F5FF"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded Squircle Base -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" stroke="rgba(0, 245, 255, 0.3)" stroke-width="8"/>
+
+  <!-- Outer Cyber Orbit Ring (Subtle) -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="rgba(0, 180, 216, 0.15)" stroke-width="3" stroke-dasharray="16 12"/>
+
+  <!-- Cybersecurity Shield Silhouette in Background -->
+  <path d="M256 90 L390 140 C390 260 256 390 256 390 C256 390 122 260 122 140 Z" 
+        fill="rgba(0, 245, 255, 0.04)" 
+        stroke="rgba(0, 245, 255, 0.25)" 
+        stroke-width="6" 
+        stroke-linejoin="round"/>
+
+  <!-- Glowing Modern "V" Monogram -->
+  <path d="M160 150 L256 350 L352 150 L300 150 L256 265 L212 150 Z" 
+        fill="url(#cyberGrad)" 
+        filter="url(#neonGlow)" />
+
+  <!-- Security Node Core Accent -->
+  <circle cx="256" cy="380" r="10" fill="#39FF14" filter="url(#neonGlow)"/>
+  <circle cx="256" cy="115" r="7" fill="#00F5FF" filter="url(#neonGlow)"/>
+</svg>

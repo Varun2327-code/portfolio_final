@@ -1,0 +1,313 @@
+.adminWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #040813;
+  color: #F8FAFC;
+  font-family: 'Inter', -apple-system, sans-serif;
+  cursor: default;
+}
+
+/* Header */
+.header {
+  height: 64px;
+  background: #070D1B;
+  border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menuToggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #F8FAFC;
+  font-size: 1.2rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brandV {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00B4D8, #00F5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brandText {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #F8FAFC;
+}
+
+.routePill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #00F5FF;
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.viewSiteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  background: rgba(0, 180, 216, 0.12);
+  border: 1px solid rgba(0, 180, 216, 0.35);
+  border-radius: 6px;
+  color: #00F5FF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewSiteBtn:hover {
+  background: rgba(0, 180, 216, 0.25);
+  border-color: #00F5FF;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.25);
+}
+
+.adminUserBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00B4D8, #7C3AED);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.userRole {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: #39FF14;
+  letter-spacing: 0.05em;
+}
+
+.logoutBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #8892A4;
+  padding: 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+/* Layout */
+.mainLayout {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #060B18;
+  border-right: 1px solid rgba(0, 180, 216, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 0.85rem;
+  flex-shrink: 0;
+  min-height: calc(100vh - 64px);
+}
+
+.sidebarSectionTitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: #64748B;
+  padding: 0 0.75rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: #8892A4;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.navItem:hover {
+  color: #F8FAFC;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.navItemActive {
+  color: #00F5FF !important;
+  background: rgba(0, 245, 255, 0.08) !important;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.navIcon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.activeIndicator {
+  position: absolute;
+  right: 0.75rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00F5FF;
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.8);
+}
+
+.sidebarFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  color: #64748B;
+  padding: 0 0.5rem;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #39FF14;
+  box-shadow: 0 0 6px rgba(57, 255, 20, 0.8);
+}
+
+.sidebarLink {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: #8892A4;
+  text-align: left;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sidebarLink:hover {
+  color: #00B4D8;
+}
+
+/* Content Area */
+.contentArea {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  max-width: 1200px;
+}
+
+.tabContentInner {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .menuToggle { display: block; }
+  .userInfo { display: none; }
+
+  .sidebar {
+    position: fixed;
+    top: 64px;
+    left: -260px;
+    bottom: 0;
+    z-index: 999;
+    transition: left 0.3s ease;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebarOpen {
+    left: 0;
+  }
+
+  .contentArea {
+    padding: 1.25rem;
+  }
+}

@@ -1,0 +1,83 @@
+/* Custom cursor — desktop only */
+@media (max-width: 1024px) {
+  .dot, .ring { display: none !important; }
+}
+
+.dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent-cyan, #00F5FF);
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.9);
+  pointer-events: none;
+  z-index: 10001;
+  transition: width 0.2s, height 0.2s, background 0.2s, box-shadow 0.2s;
+  will-change: transform;
+}
+
+.dot.hover {
+  width: 12px;
+  height: 12px;
+  background: var(--color-accent-blue, #00B4D8);
+  box-shadow: 0 0 12px rgba(0, 180, 216, 0.9);
+  margin-left: -2px;
+  margin-top: -2px;
+}
+
+.dot.view {
+  width: 6px;
+  height: 6px;
+  opacity: 0.5;
+}
+
+.ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 180, 216, 0.5);
+  pointer-events: none;
+  z-index: 10000;
+  will-change: transform;
+  transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring_hover {
+  width: 50px;
+  height: 50px;
+  border-color: var(--color-accent-blue, #00B4D8);
+  background: rgba(0, 180, 216, 0.05);
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.ring_view {
+  width: 64px;
+  height: 64px;
+  border-color: var(--color-accent-cyan, #00F5FF);
+  background: rgba(0, 245, 255, 0.08);
+  margin-left: -12px;
+  margin-top: -12px;
+}
+
+.ring_external {
+  width: 48px;
+  height: 48px;
+  border-color: var(--color-accent-violet, #7C3AED);
+  background: rgba(124, 58, 237, 0.05);
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.viewLabel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-cyan, #00F5FF);
+  text-transform: uppercase;
+}

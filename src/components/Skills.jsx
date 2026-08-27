@@ -1,152 +1,205 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import styles from "./Skills.module.css";
-
-const skillCategories = [
-  {
-    title: "Full Stack Development",
-    icon: "💻",
-    skills: [
-      { name: "React.js", level: 85, icon: "⚛️" },
-      { name: "Node.js", level: 80, icon: "🟩" },
-      { name: "Express.js", level: 78, icon: "🚀" },
-      { name: "MongoDB", level: 80, icon: "🍃" },
-      { name: "Redis", level: 65, icon: "🔴" },
-      { name: "REST APIs", level: 85, icon: "🔗" },
-      { name: "Tailwind CSS", level: 80, icon: "🎨" },
-      { name: "Material UI", level: 75, icon: "📦" }
-    ]
-  },
-  {
-    title: "Web Security",
-    icon: "🔐",
-    skills: [
-      { name: "JWT Authentication", level: 80, icon: "🔑" },
-      { name: "OAuth 2.0", level: 70, icon: "🛡️" },
-      { name: "RBAC", level: 75, icon: "👥" },
-      { name: "OWASP Top 10", level: 65, icon: "⚠️" },
-      { name: "Penetration Testing", level: 60, icon: "🧪" },
-      { name: "VAPT", level: 60, icon: "🔍" },
-      { name: "SQL Injection Prevention", level: 75, icon: "💉" }
-    ]
-  },
-  {
-    title: "Programming Languages",
-    icon: "🧠",
-    skills: [
-      { name: "JavaScript", level: 85, icon: "🟨" },
-      { name: "Python", level: 70, icon: "🐍" },
-      { name: "SQL", level: 80, icon: "🗄️" },
-      { name: "HTML5", level: 95, icon: "🌐" },
-      { name: "CSS3", level: 90, icon: "🎨" },
-      { name: "PHP", level: 60, icon: "🐘" }
-    ]
-  },
-  {
-    title: "Tools & Platforms",
-    icon: "🛠️",
-    skills: [
-      { name: "Git", level: 90, icon: "🐙" },
-      { name: "GitHub", level: 90, icon: "🐱" },
-      { name: "Postman", level: 85, icon: "📬" },
-      { name: "Linux", level: 80, icon: "🐧" },
-      { name: "Firebase", level: 75, icon: "🔥" },
-      { name: "MySQL", level: 80, icon: "🟦" },
-      { name: "Vercel", level: 85, icon: "▲" },
-      { name: "Netlify", level: 85, icon: "🌍" }
-    ]
-  }
-];
+import React, { useState, useRef, useMemo } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { usePortfolio } from '../context/PortfolioContext'
+import styles from './Skills.module.css'
 
 const Skills = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const { skillCategories } = usePortfolio()
+  const [activeTab, setActiveTab] = useState(skillCategories[0]?.id || 'fullstack')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [hoveredSkill, setHoveredSkill] = useState(null)
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // run only once ✅
-        }
-      },
-      { threshold: 0.2 }
-    );
+  // Total count
+  const totalSkillsCount = useMemo(() => {
+    return skillCategories.reduce((acc, cat) => acc + (cat.skills?.length || 0), 0)
+  }, [skillCategories])
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+  // Filtered skills
+  const filteredSkills = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase()
 
-    return () => observer.disconnect();
-  }, []);
+    if (query) {
+      // When user searches, search across all categories
+      let pool = []
+      skillCategories.forEach((cat) => {
+        cat.skills.forEach((s) => {
+          pool.push({ ...s, categoryName: cat.label, categoryColor: cat.color })
+        })
+      })
+      return pool.filter(
+        (s) =>
+          s.name.toLowerCase().includes(query) ||
+          (s.desc && s.desc.toLowerCase().includes(query)) ||
+          (s.level && s.level.toLowerCase().includes(query)) ||
+          (s.categoryName && s.categoryName.toLowerCase().includes(query))
+      )
+    }
+
+    const cat = skillCategories.find((c) => c.id === activeTab) || skillCategories[0]
+    if (!cat) return []
+
+    return (cat.skills || []).map((s) => ({
+      ...s,
+      categoryName: cat.label,
+      categoryColor: cat.color,
+    }))
+  }, [skillCategories, activeTab, searchQuery])
 
   return (
-    <section ref={sectionRef} className={styles.skills} id="skills">
-      {/* Glow Effects */}
-      <div className={styles.glowOrb} style={{ top: "15%", left: "25%" }} />
-      <div className={styles.glowOrb} style={{ top: "40%", left: "75%" }} />
-      <div className={styles.glowOrb} style={{ top: "70%", left: "35%" }} />
+    <section id="skills" className={styles.skills} ref={ref} aria-label="Technical Skills & Cybersecurity Capabilities">
+      <div className={styles.bgGlow} aria-hidden="true" />
+      <div className={styles.bgGrid} aria-hidden="true" />
 
-      <motion.h2
-        initial={{ opacity: 0, y: -30 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-      >
-        SKILLS
-      </motion.h2>
+      <div className={styles.container}>
+        {/* Header */}
+        <motion.div
+          className={styles.header}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <span className={styles.sectionLabel}>
+            <span className={styles.labelLine} aria-hidden="true" />
+            TECHNICAL ARSENAL &amp; CAPABILITIES
+          </span>
+          <h2 className={styles.heading}>What I Work With</h2>
+          <p className={styles.subheading}>
+            A curated full-stack development &amp; cybersecurity stack built for scalable architecture, offensive auditing, and zero-day defense.
+          </p>
+        </motion.div>
 
-      <div className={styles.skillsGrid}>
-        {skillCategories.map((category, categoryIndex) => (
+        {/* Controls: Search Bar + Tab Filter */}
+        <motion.div
+          className={styles.controlsWrapper}
+          initial={{ opacity: 0, y: 15 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+        >
+          {/* Live Search Input */}
+          <div className={styles.searchBox}>
+            <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Search ${totalSkillsCount}+ technologies, security tools & frameworks...`}
+              className={styles.searchInput}
+            />
+            {searchQuery && (
+              <button
+                className={styles.clearBtn}
+                onClick={() => setSearchQuery('')}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Category Tabs */}
+          <div className={styles.tabs} role="tablist" aria-label="Skill categories">
+            {skillCategories.map((cat) => (
+              <button
+                key={cat.id}
+                role="tab"
+                aria-selected={activeTab === cat.id}
+                className={`${styles.tab} ${activeTab === cat.id ? styles.tabActive : ''}`}
+                onClick={() => {
+                  setActiveTab(cat.id)
+                  if (searchQuery) setSearchQuery('')
+                }}
+                style={{ '--tab-color': cat.color }}
+                data-cursor="hover"
+              >
+                <span className={styles.tabText}>
+                  {cat.label} ({cat.skills?.length || 0})
+                </span>
+                {activeTab === cat.id && (
+                  <motion.div
+                    className={styles.tabIndicator}
+                    layoutId="tabIndicator"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Skills Grid */}
+        <AnimatePresence mode="wait">
           <motion.div
-            key={categoryIndex}
-            className={`${styles.skillCategory} ${styles["hover-glow"]}`}
-            initial={{ opacity: 0, x: -50 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: categoryIndex * 0.2 }}
+            key={`${activeTab}-${searchQuery}`}
+            className={styles.panel}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25 }}
           >
-            <h3>
-              <span className={styles.skillIcon}>{category.icon}</span>
-              {category.title}
-            </h3>
+            {filteredSkills.length > 0 ? (
+              <div className={styles.skillGrid}>
+                {filteredSkills.map((skill, i) => (
+                  <motion.div
+                    key={`${skill.name}-${i}`}
+                    className={`${styles.skillCard} ${hoveredSkill === skill.name ? styles.skillCardActive : ''}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: Math.min(i * 0.02, 0.3), duration: 0.25 }}
+                    onMouseEnter={() => setHoveredSkill(skill.name)}
+                    onMouseLeave={() => setHoveredSkill(null)}
+                    style={{ '--skill-color': skill.categoryColor || '#00B4D8' }}
+                  >
+                    <div className={styles.skillCardTop}>
+                      <div className={styles.skillNameGroup}>
+                        <span className={styles.skillDot} />
+                        <span className={styles.skillName}>{skill.name}</span>
+                      </div>
+                      {skill.level && (
+                        <span
+                          className={`${styles.skillLevelPill} ${
+                            skill.level === 'Expert'
+                              ? styles.levelExpert
+                              : skill.level === 'Advanced'
+                              ? styles.levelAdvanced
+                              : styles.levelProficient
+                          }`}
+                        >
+                          {skill.level}
+                        </span>
+                      )}
+                    </div>
 
-            <div className={styles.skillList}>
-              {category.skills.map((skill, skillIndex) => (
-                <motion.div
-                  key={skillIndex}
-                  className={styles.skillItem}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={{
-                    delay: categoryIndex * 0.2 + skillIndex * 0.1,
-                  }}
+                    <p className={styles.skillDesc}>{skill.desc}</p>
+
+                    {Boolean(searchQuery) && (
+                      <div className={styles.skillMeta}>
+                        <span className={styles.skillCategoryTag}>{skill.categoryName}</span>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyState}>
+                <p>No technologies matched "<strong>{searchQuery}</strong>"</p>
+                <button
+                  className={styles.resetSearchBtn}
+                  onClick={() => setSearchQuery('')}
                 >
-                  <div className={styles.skillName}>
-                    <span className={styles.skillIconSmall}>
-                      {skill.icon}
-                    </span>
-                    {skill.name}
-                  </div>
-
-                  <div className={styles.skillProgress}>
-                    <motion.div
-                      className={styles.skillProgressBar}
-                      initial={{ width: 0 }}
-                      animate={
-                        isVisible ? { width: `${skill.level}%` } : {}
-                      }
-                      transition={{ duration: 1 }}
-                    />
-                  </div>
-
-                  <span className={styles.skillLevel}>
-                    {skill.level}%
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+                  Clear Search Filter
+                </button>
+              </div>
+            )}
           </motion.div>
-        ))}
+        </AnimatePresence>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Skills;
+export default Skills
