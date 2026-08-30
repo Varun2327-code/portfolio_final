@@ -25,6 +25,15 @@ const Footer = () => {
 
         {/* Center */}
         <div className={styles.center}>
+          <nav className={styles.footerNav} aria-label="Footer quick links">
+            <a href="#hero" className={styles.footerNavLink}>Home</a>
+            <a href="#about" className={styles.footerNavLink}>About</a>
+            <a href="#skills" className={styles.footerNavLink}>Skills</a>
+            <a href="#experience" className={styles.footerNavLink}>Experience</a>
+            <a href="#projects" className={styles.footerNavLink}>Projects</a>
+            <a href="#security" className={styles.footerNavLink}>Security</a>
+            <a href="#contact" className={styles.footerNavLink}>Contact</a>
+          </nav>
           <p className={styles.built}>
             Built with{' '}
             <span className={styles.heart} aria-label="passion">♥</span>
@@ -78,25 +87,6 @@ const Footer = () => {
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
-            </svg>
-          </a>
-          <a
-            href="/shrimal"
-            onClick={(e) => {
-              e.preventDefault()
-              window.history.pushState({}, '', '/shrimal')
-              window.dispatchEvent(new PopStateEvent('popstate'))
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-            className={styles.socialLink}
-            aria-label="Admin Control Panel"
-            title="Admin Panel (/shrimal)"
-            data-cursor="hover"
-            style={{ color: '#00F5FF' }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
           </a>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { PortfolioProvider, usePortfolio } from './context/PortfolioContext'
 import Preloader from './components/Preloader'
 import CustomCursor from './components/CustomCursor'
@@ -14,9 +14,11 @@ import SecurityTerminal from './components/SecurityTerminal'
 import ContactMe from './components/ContactMeUpdated'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
-import AdminLogin from './admin/AdminLogin'
-import AdminPanel from './admin/AdminPanel'
+import SEO from './components/SEO'
 import './App.css'
+
+const AdminLogin = lazy(() => import('./admin/AdminLogin'))
+const AdminPanel = lazy(() => import('./admin/AdminPanel'))
 
 function PortfolioApp() {
   const { trackPageView } = usePortfolio()
@@ -105,26 +107,32 @@ function PortfolioApp() {
   if (isAdminRoute) {
     if (!isAdminAuth) {
       return (
-        <AdminLogin
-          onLoginSuccess={handleAdminLogin}
-          onGoBack={handleGoToLiveSite}
-        />
+        <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050A14' }} />}>
+          <AdminLogin
+            onLoginSuccess={handleAdminLogin}
+            onGoBack={handleGoToLiveSite}
+          />
+        </Suspense>
       )
     }
     return (
-      <AdminPanel
-        onGoToLiveSite={handleGoToLiveSite}
-        onLogout={handleAdminLogout}
-      />
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050A14' }} />}>
+        <AdminPanel
+          onGoToLiveSite={handleGoToLiveSite}
+          onLogout={handleAdminLogout}
+        />
+      </Suspense>
     )
-  }
-
-  if (loading) {
-    return <Preloader onComplete={handleLoadComplete} />
   }
 
   return (
     <div className="app">
+      {/* Non-blocking Preloader Overlay */}
+      {loading && <Preloader onComplete={handleLoadComplete} />}
+
+      {/* SEO Engine */}
+      <SEO />
+
       {/* Custom cursor — desktop only */}
       <CustomCursor />
 

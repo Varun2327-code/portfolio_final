@@ -51,7 +51,10 @@ const AboutMe = () => {
                 src={about.aboutImage || '/about-studio.jpg'}
                 alt="Varun Shrimal in Engineering Studio"
                 className={styles.image}
+                width="650"
+                height="407"
                 loading="lazy"
+                decoding="async"
               />
               <div className={styles.imageOverlay} aria-hidden="true" />
               {/* Corner accents */}

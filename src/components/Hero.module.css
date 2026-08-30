@@ -183,6 +183,20 @@
   filter: drop-shadow(0 0 25px rgba(0, 245, 255, 0.25));
 }
 
+/* LCP-safe name reveal: transform only, opacity stays 1 so element is always painted */
+.nameReveal {
+  animation: heroNameSlideUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes heroNameSlideUp {
+  from {
+    transform: translateY(22px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 /* Subtitle */
 .subtitle {
   font-size: clamp(0.95rem, 1.5vw, 1.1rem);
@@ -214,6 +228,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   border: none;
+  text-decoration: none;
   border-radius: 6px;
   cursor: pointer;
   overflow: hidden;
@@ -264,6 +279,7 @@
   letter-spacing: 0.08em;
   border: 1px solid rgba(0, 245, 255, 0.35);
   border-radius: 6px;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
 }
@@ -295,6 +311,7 @@
   letter-spacing: 0.08em;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
 }
@@ -529,6 +546,7 @@
   gap: 0.4rem;
   background: none;
   border: none;
+  text-decoration: none;
   cursor: pointer;
   color: var(--color-text-muted, #64748B);
   transition: color 0.2s ease;

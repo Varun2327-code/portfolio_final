@@ -20,19 +20,17 @@ const Preloader = ({ onComplete }) => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      // Skip animation entirely
+    const hasSeenIntro = sessionStorage.getItem('vportfolio_seen_intro')
+    if (prefersReducedMotion || hasSeenIntro) {
       setProgress(100)
       setCurrentLines(TERMINAL_LINES)
       setAccessGranted(true)
-      const t = setTimeout(() => {
-        setLeaving(true)
-        setTimeout(() => onComplete?.(), 300)
-      }, 300)
-      return () => clearTimeout(t)
+      onComplete?.()
+      return
     }
 
-    const totalDuration = 2200 // ms
+    sessionStorage.setItem('vportfolio_seen_intro', 'true')
+    const totalDuration = 300 // ms — fast exit to unblock LCP
     const startTime = Date.now()
 
     // Progress counter
@@ -41,11 +39,11 @@ const Preloader = ({ onComplete }) => {
       const newProgress = Math.min(Math.floor((elapsed / totalDuration) * 100), 100)
       setProgress(newProgress)
       if (newProgress >= 100) clearInterval(progressInterval)
-    }, 22)
+    }, 16)
 
-    // Terminal lines — stagger over first 1800ms
+    // Terminal lines — stagger over first 260ms
     TERMINAL_LINES.forEach((_, i) => {
-      const delay = (i / TERMINAL_LINES.length) * 1800
+      const delay = (i / TERMINAL_LINES.length) * 240
       setTimeout(() => {
         setCurrentLines(prev => [...prev, TERMINAL_LINES[i]])
       }, delay)
@@ -54,13 +52,13 @@ const Preloader = ({ onComplete }) => {
     // Access granted at 100%
     const accessTimer = setTimeout(() => {
       setAccessGranted(true)
-    }, totalDuration - 100)
+    }, totalDuration - 20)
 
-    // Exit
+    // Exit — fast fade, 100ms transition
     const exitTimer = setTimeout(() => {
       setLeaving(true)
-      setTimeout(() => onComplete?.(), 700)
-    }, totalDuration + 200)
+      setTimeout(() => onComplete?.(), 100)
+    }, totalDuration + 20)
 
     return () => {
       clearInterval(progressInterval)

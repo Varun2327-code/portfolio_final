@@ -133,11 +133,11 @@ const Hero = () => {
             {hero.intro || "Hi, I'm"}
           </motion.p>
 
-          {/* Name with dynamic shimmer */}
-          <motion.h1 variants={fadeUp} className={styles.name}>
+          {/* Name - plain h1 for instant LCP paint, CSS slide-up animation */}
+          <h1 className={`${styles.name} ${styles.nameReveal}`}>
             <span className={styles.nameFirst}>{hero.firstName || 'VARUN'} </span>
             <span className={styles.nameLast}>{hero.lastName || 'SHRIMAL'}</span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
           <motion.p variants={fadeUp} className={styles.subtitle}>
@@ -146,9 +146,13 @@ const Hero = () => {
 
           {/* CTA Buttons with hover glow */}
           <motion.div variants={fadeUp} className={styles.buttons}>
-            <button
+            <a
+              href="#projects"
               className={styles.btnPrimary}
-              onClick={() => scrollTo('projects')}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollTo('projects')
+              }}
               data-cursor="hover"
             >
               <span className={styles.btnShimmer} />
@@ -156,7 +160,7 @@ const Hero = () => {
               <svg className={styles.btnArrow} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
-            </button>
+            </a>
 
             <button
               className={styles.btnOutline}
@@ -171,13 +175,17 @@ const Hero = () => {
               </svg>
             </button>
 
-            <button
+            <a
+              href="#contact"
               className={styles.btnGhost}
-              onClick={() => scrollTo('contact')}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollTo('contact')
+              }}
               data-cursor="hover"
             >
               CONTACT ME
-            </button>
+            </a>
           </motion.div>
 
           {/* Social Links */}
@@ -247,7 +255,11 @@ const Hero = () => {
               src={hero.heroImage || '/hero-cinematic.jpg'}
               alt="Varun Shrimal — Full Stack Developer & Cybersecurity Specialist"
               className={styles.photo}
+              width="744"
+              height="460"
+              fetchpriority="high"
               loading="eager"
+              decoding="sync"
             />
             <div className={styles.photoOverlay} aria-hidden="true" />
             <div className={styles.scanlineSweep} aria-hidden="true" />
@@ -267,9 +279,13 @@ const Hero = () => {
       </motion.div>
 
       {/* Scroll indicator with animated pulse */}
-      <motion.button
+      <motion.a
+        href="#about"
         className={styles.scrollIndicator}
-        onClick={() => scrollTo('about')}
+        onClick={(e) => {
+          e.preventDefault()
+          scrollTo('about')
+        }}
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}
@@ -279,7 +295,7 @@ const Hero = () => {
         <div className={styles.scrollLine}>
           <div className={styles.scrollDot} />
         </div>
-      </motion.button>
+      </motion.a>
     </section>
   )
 }

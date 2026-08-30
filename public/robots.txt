@@ -1,0 +1,12 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /shrimal
+Disallow: /admin
+Disallow: /api/
+
+# Host
+Host: https://www.varunshrimal.me/
+
+# Sitemaps
+Sitemap: https://www.varunshrimal.me/sitemap.xml

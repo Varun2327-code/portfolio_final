@@ -18,22 +18,30 @@ const NavigationMenu = ({ darkMode, onToggleTheme }) => {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
+    let ticking = false
+
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      setIsScrolled(scrollY > 60)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY
+          setIsScrolled(scrollY > 60)
 
-      // Scroll progress
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      setScrollProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
+          // Scroll progress
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight
+          setScrollProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
 
-      // Active section
-      const scrollPos = scrollY + window.innerHeight * 0.35
-      let found = 'hero'
-      for (const sec of NAV_SECTIONS) {
-        const el = document.getElementById(sec.id)
-        if (el && el.offsetTop <= scrollPos) found = sec.id
+          // Active section
+          const scrollPos = scrollY + window.innerHeight * 0.35
+          let found = 'hero'
+          for (const sec of NAV_SECTIONS) {
+            const el = document.getElementById(sec.id)
+            if (el && el.offsetTop <= scrollPos) found = sec.id
+          }
+          setActiveSection(found)
+          ticking = false
+        })
+        ticking = true
       }
-      setActiveSection(found)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -63,39 +71,51 @@ const NavigationMenu = ({ darkMode, onToggleTheme }) => {
       >
         <div className={styles.inner}>
           {/* Logo */}
-          <button
+          <a
+            href="#hero"
             className={styles.logo}
-            onClick={() => scrollTo('hero')}
+            onClick={(e) => {
+              e.preventDefault()
+              scrollTo('hero')
+            }}
             aria-label="Scroll to top"
           >
             <span className={styles.logoV}>V</span>
             <span className={styles.logoText}>PORTFOLIO</span>
-          </button>
+          </a>
 
           {/* Desktop Links */}
           <ul className={styles.navList} role="list">
             {NAV_SECTIONS.map(sec => (
               <li key={sec.id}>
-                <button
+                <a
+                  href={`#${sec.id}`}
                   className={`${styles.navLink} ${activeSection === sec.id ? styles.active : ''}`}
-                  onClick={() => scrollTo(sec.id)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    scrollTo(sec.id)
+                  }}
                   aria-current={activeSection === sec.id ? 'page' : undefined}
                 >
                   {sec.label}
-                </button>
+                </a>
               </li>
             ))}
           </ul>
 
           {/* Right controls */}
           <div className={styles.controls}>
-            <button
+            <a
+              href="#contact"
               className={styles.talkBtn}
-              onClick={() => scrollTo('contact')}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollTo('contact')
+              }}
               aria-label="Contact me"
             >
               LET'S TALK
-            </button>
+            </a>
 
             <button
               className={styles.themeToggle}
@@ -141,13 +161,17 @@ const NavigationMenu = ({ darkMode, onToggleTheme }) => {
           <ul role="list">
             {NAV_SECTIONS.map((sec, i) => (
               <li key={sec.id} style={{ animationDelay: `${i * 0.06}s` }}>
-                <button
+                <a
+                  href={`#${sec.id}`}
                   className={`${styles.mobileLink} ${activeSection === sec.id ? styles.active : ''}`}
-                  onClick={() => scrollTo(sec.id)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    scrollTo(sec.id)
+                  }}
                 >
                   <span className={styles.mobileNum}>0{i + 1}</span>
                   {sec.label}
-                </button>
+                </a>
               </li>
             ))}
           </ul>

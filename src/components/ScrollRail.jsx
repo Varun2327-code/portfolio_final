@@ -17,18 +17,26 @@ const ScrollRail = () => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
+    let ticking = false
 
-      const scrollPos = scrollY + window.innerHeight * 0.35
-      let found = 'hero'
-      for (const sec of RAIL_SECTIONS) {
-        const el = document.getElementById(sec.id)
-        if (el && el.offsetTop <= scrollPos) found = sec.id
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight
+          setProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
+
+          const scrollPos = scrollY + window.innerHeight * 0.35
+          let found = 'hero'
+          for (const sec of RAIL_SECTIONS) {
+            const el = document.getElementById(sec.id)
+            if (el && el.offsetTop <= scrollPos) found = sec.id
+          }
+          setActiveSection(found)
+          ticking = false
+        })
+        ticking = true
       }
-      setActiveSection(found)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
